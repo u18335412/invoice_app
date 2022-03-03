@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 const Navbar = () => {
   return (
-    <nav className="flex md:flex-row justify-between xl:rounded-tr-[20px] xl:rounded-br-[20px] xl:h-full xl:min-h-screen md:h-[5rem] xl:absolute md:relative xl:flex-col xl:w-[6.438rem] md:w-full overflow-hidden dark:bg-[rgb(37,41,69)]">
+    <nav className="flex md:flex-row justify-between xl:rounded-tr-[20px] xl:rounded-br-[20px] xl:h-full xl:min-h-screen md:h-[5rem] z-50 xl:absolute md:relative xl:flex-col inset-0 xl:w-[6.438rem] md:w-full overflow-hidden dark:bg-[rgb(37,41,69)]">
       <div className=" xl:flex md:block">
         <div
           className="xl:w-full md:w-[5rem] flex rounded-br-[20px] overflow-hidden xl:h-[6.438rem] md:h-full flex-col-reverse bg-[rgb(124,93,250)] relative justify-center items-center"
