@@ -1,11 +1,24 @@
 /* eslint-disable @next/next/no-img-element */
-import Head from "next/head";
-import Image from "next/image";
 import Contanier from "../src/components/container";
 import Invoice from "../src/components/invoice";
 import data from "../data.json";
+import FilterPopover from "../src/components/filter_popover";
+import { useEffect, useState } from "react";
 
 export default function Home() {
+  const [filtered, setFilterd] = useState(data);
+  const [filter, setFilter] = useState("");
+
+  useEffect(() => {
+    setFilterd(
+      data.filter(
+        (invoice) =>
+          filter === "" ||
+          (filter !== "" && invoice.status === filter.toLocaleLowerCase())
+      )
+    );
+  }, [filter, setFilter]);
+
   return (
     <>
       <main className="">
@@ -18,16 +31,12 @@ export default function Home() {
               </p>
             </div>
             <div className="flex gap-x-[2.5rem] items-center">
-              <div className="flex items-center font-bold text-[0.75rem] w-[7.375rem] gap-x-[1rem]">
-                <p>filter by status</p>
-                <img
-                  src="/assets/icon-arrow-down.svg"
-                  className="  w-[0.529rem] h-[0.264rem]"
-                  alt="arrow down"
-                />
-              </div>
+              <FilterPopover
+                setFilter={setFilter}
+                filter={filter}
+              ></FilterPopover>
               <div>
-                <button className="flex text-[0.75rem] gap-x-[1rem] w-[9.375rem] font-bold text-white bg-[rgb(124,93,250)] rounded-[24px] items-center p-[8px]">
+                <button className="flex text-[0.75rem] gap-x-[1rem] w-[9.375rem] font-bold text-white transition-all hover:bg-[rgba(146,119,255,1)] bg-[rgb(124,93,250)] rounded-[24px] items-center p-[8px]">
                   <div className="flex bg-white w-[32px] h-[32px] items-center justify-center rounded-full">
                     <img
                       src="/assets/icon-plus.svg"
@@ -42,9 +51,15 @@ export default function Home() {
           </div>
 
           <div className="mt-[3.5rem] space-y-[1rem]">
-            {data.length > 1 ? (
-              data.map((invoice) => {
-                return <Invoice key={invoice?.id} invoice={invoice}></Invoice>;
+            {filtered.length > 1 ? (
+              filtered.map((invoice) => {
+                return (
+                  <Invoice
+                    filter={filter}
+                    key={invoice?.id}
+                    invoice={invoice}
+                  />
+                );
               })
             ) : (
               <div className="flex justify-center items-center mt-[8.813rem]">
