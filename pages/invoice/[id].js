@@ -1,35 +1,58 @@
 /* eslint-disable @next/next/no-img-element */
 import Contanier from "../../src/components/container";
+import Link from "next/link";
+import InvoiceEdit from "../../src/components/invoice_edit";
+import { useState } from "react";
+import DeleteModal from "../../src/components/delete_modal";
 
 const ViewInvoice = () => {
+  let [isEditOpen, setEditIsOpen] = useState(false);
+  let [isDeleteOpen, setDeleteIsOpen] = useState(false);
+
   return (
     <main className="pt-[4rem]">
       <Contanier>
-        <button className="flex text-[0.75rem] items-center justify-center font-bold gap-x-[1.75rem]">
-          <img
-            src="/assets/icon-arrow-left.svg"
-            className="w-2 h-2"
-            alt="arrow left"
-          />
-          Go back
-        </button>
+        <InvoiceEdit
+          closeModal={() => setEditIsOpen(false)}
+          isOpen={isEditOpen}
+        />
+        <DeleteModal
+          closeModal={() => setDeleteIsOpen(false)}
+          isOpen={isDeleteOpen}
+        />
+        <Link href="/" passHref>
+          <button className="flex text-[0.75rem] items-center justify-center font-bold gap-x-[1.75rem]">
+            <img
+              src="/assets/icon-arrow-left.svg"
+              className="w-2 h-2"
+              alt="arrow left"
+            />
+            Go back
+          </button>
+        </Link>
 
-        <div className="mt-[2rem] text-[.75rem] px-[2rem] py-[1.25rem] justify-between flex shadow-md">
+        <div className="mt-[2rem] text-[.75rem] px-[2rem] py-[1.25rem] justify-between flex rounded-[.5rem] ">
           <div className="flex items-center gap-x-[1rem] w-fit">
             <p>Status</p>
-            <div className="w-full px-[1.125rem]  flex items-center font-bold gap-x-[.5rem]">
+            <div className="w-full px-[1.125rem]  flex items-center font-bold gap-x-[.5rem] [filter:drop-shadow(0px_4px_4px_rgba(0,0,0,0.25))]">
               <span className="w-2 h-2 rounded-full bg-[rgba(255,143,0,1)]"></span>
               <p className="text-[rgba(255,143,0,1)]">Pending</p>
             </div>
           </div>
           <div className="flex gap-x-[.5rem] w-fit">
-            <button className="text-[rgba(126,136,195,1)] font-bold px-[1.2rem]">
-              clear
+            <button
+              onClick={() => setEditIsOpen(true)}
+              className="text-[rgba(126,136,195,1)] rounded-full transition-all w-[4.563rem] [h-3rem] hover:bg-[rgba(223,227,250,1)] text-[.75rem] font-bold px-[1.2rem]"
+            >
+              Edit
             </button>
-            <button className=" font-bold text-[0.75rem] px-[1.5rem] text-white rounded-full bg-[rgba(236,87,87,1)] py-[1rem]">
+            <button
+              onClick={() => setDeleteIsOpen(true)}
+              className=" font-bold text-[0.75rem] px-[1.5rem] text-white rounded-full bg-[rgba(236,87,87,1)] py-[1rem] h-[3rem]"
+            >
               Delete
             </button>
-            <button className=" font-bold px-[1.5rem] py-[1rem] bg-[rgba(124,93,250,1)] rounded-full text-white text-[0.75rem]">
+            <button className=" font-bold px-[1.5rem] py-[1rem] bg-[rgba(124,93,250,1)] rounded-full transition-all hover:bg-[rgba(146,119,255,1)] text-white text-[0.75rem]">
               Mark as Paid
             </button>
           </div>
@@ -120,24 +143,26 @@ const ViewInvoice = () => {
                     </th>
                   </tr>
                 </thead>
-                <tr className="">
-                  <td className=" pt-[2rem] font-bold text-[.75rem] w-[13.25rem]">
-                    Banner Design
-                  </td>
-                  <td className=" text-center pt-[2rem]">
-                    <span className="text-[rgba(126,136,195,1)] font-bold text-[.75rem]">
-                      1
-                    </span>
-                  </td>
-                  <td className="text-right pt-[2rem] ">
-                    <span className="text-[rgba(126,136,195,1)] font-bold text-[.75rem]">
-                      £ 156.00
-                    </span>
-                  </td>
-                  <td className="text-right pt-[2rem]">
-                    <span className=" font-bold text-[.75rem]">£ 156.00</span>
-                  </td>
-                </tr>
+                <tbody>
+                  <tr className="">
+                    <td className=" pt-[2rem] font-bold text-[.75rem] w-[13.25rem]">
+                      Banner Design
+                    </td>
+                    <td className=" text-center pt-[2rem]">
+                      <span className="text-[rgba(126,136,195,1)] font-bold text-[.75rem]">
+                        1
+                      </span>
+                    </td>
+                    <td className="text-right pt-[2rem] ">
+                      <span className="text-[rgba(126,136,195,1)] font-bold text-[.75rem]">
+                        £ 156.00
+                      </span>
+                    </td>
+                    <td className="text-right pt-[2rem]">
+                      <span className=" font-bold text-[.75rem]">£ 156.00</span>
+                    </td>
+                  </tr>
+                </tbody>
               </table>
             </div>
             <div className="bg-[rgba(55,59,83,1)] p-[2rem] w-full h-[5rem] rounded-b-[8px] flex items-center text-white justify-between">
