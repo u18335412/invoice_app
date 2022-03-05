@@ -1,20 +1,25 @@
 /* eslint-disable @next/next/no-img-element */
 import Contanier from "../../src/components/container";
 import Link from "next/link";
-import InvoiceEdit from "../../src/components/invoice_edit";
+import InvoiceEditAdd from "../../src/components/invoice_edit";
 import { useState } from "react";
 import DeleteModal from "../../src/components/delete_modal";
+import data from "../../data.json";
 
 const ViewInvoice = () => {
   let [isEditOpen, setEditIsOpen] = useState(false);
   let [isDeleteOpen, setDeleteIsOpen] = useState(false);
 
+  const [invoiceData, setData] = useState(data[0]);
+
   return (
     <main className="pt-[4rem]">
       <Contanier>
-        <InvoiceEdit
+        <InvoiceEditAdd
           closeModal={() => setEditIsOpen(false)}
           isOpen={isEditOpen}
+          invoiceData={invoiceData}
+          setData={setData}
         />
         <DeleteModal
           closeModal={() => setDeleteIsOpen(false)}
@@ -121,22 +126,22 @@ const ViewInvoice = () => {
               <table className="w-full">
                 <thead>
                   <tr>
-                    <th className=" text-left">
+                    <th className="text-left ">
                       <span className="text-[rgba(126,136,195,1)] font-normal text-[.75rem]">
                         Item name
                       </span>
                     </th>
-                    <th className=" text-center">
+                    <th className="text-center ">
                       <span className="text-[rgba(126,136,195,1)] font-normal text-[.75rem]">
                         QTY.
                       </span>
                     </th>
-                    <th className=" text-right">
+                    <th className="text-right ">
                       <span className="text-[rgba(126,136,195,1)] font-normal text-[.75rem]">
                         Price
                       </span>
                     </th>
-                    <th className=" text-right">
+                    <th className="text-right ">
                       <span className="text-[rgba(126,136,195,1)] font-normal text-[.75rem]">
                         Total
                       </span>
