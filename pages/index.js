@@ -9,26 +9,12 @@ import useStore from "../src/store/zuestand";
 
 export default function Home() {
   const invoices = useStore((state) => state.invoices);
-  const [filtered, setFilterd] = useState(invoices);
   const [filter, setFilter] = useState("");
   const [newInvoiceData, setNewInvoiceData] = useState({});
   let [isAddOpen, setAddIsOpen] = useState(false);
 
-  useEffect(() => {
-    if (filter != "") {
-      setFilterd(
-        invoices.filter(
-          (invoice) =>
-            filter === "" ||
-            (filter !== "" && invoice.status === filter.toLocaleLowerCase())
-        )
-      );
-    }
-  }, [filter, setFilter, invoices]);
-
   return (
     <>
-      {console.log("here")}
       <main className="">
         <Contanier>
           <InvoiceEditAdd
@@ -42,7 +28,7 @@ export default function Home() {
             <div>
               <p className=" font-bold text-[2rem]">Invoices</p>
               <p className=" text-[0.75rem] text-[rgba(136,142,176,1)]">
-                There are 7 total invoices
+                There are {invoices.length} total invoices
               </p>
             </div>
             <div className="flex gap-x-[2.5rem] items-center">
@@ -69,15 +55,20 @@ export default function Home() {
           </div>
 
           <ul className="mt-[3.5rem] space-y-[1rem]">
-            {filtered.length > 0 ? (
-              filtered.map((invoice) => {
-                return (
-                  <Invoice
-                    key={invoice?.id}
-                    filter={filter}
-                    invoice={invoice}
-                  />
-                );
+            {invoices.length > 0 ? (
+              invoices.map((invoice) => {
+                if (
+                  filter === "" ||
+                  (filter !== "" &&
+                    invoice.status === filter.toLocaleLowerCase())
+                )
+                  return (
+                    <Invoice
+                      key={invoice?.id}
+                      filter={filter}
+                      invoice={invoice}
+                    />
+                  );
               })
             ) : (
               <>

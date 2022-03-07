@@ -54,13 +54,21 @@ const InputField = ({
   </div>
 );
 
-const EditListItem = ({ itemName, qty, price, total, register, errors }) => {
+const EditListItem = ({
+  itemName,
+  qty,
+  price,
+  total,
+  register,
+  errors,
+  value,
+}) => {
   return (
     <div className="mt-[1rem] flex justify-between items-center">
       <input
         {...register(`${itemName}Name`, { required: true })}
         type="text"
-        defaultValue={itemName}
+        defaultValue={value}
         name={`${itemName}Name`}
         className={`h-[3rem] px-[1.2rem] focus:border-[rgba(124,93,250,1)] text-[.75rem] font-bold  w-[13.375rem] border-[1px] ${
           errors[`${itemName}Name`]
@@ -117,6 +125,14 @@ const EditListItem = ({ itemName, qty, price, total, register, errors }) => {
 };
 
 const InvoiceEditAdd = ({ isOpen, closeModal, invoiceData }) => {
+  const payment_type = [
+    "Net 1 Day",
+    "Net 7 Days",
+    "Net 14 Days",
+    "Net 30 Days",
+  ];
+  const { removeInvoice } = useInvoice();
+  const [selected, setSelected] = useState(payment_type[0]);
   const { editInvoice, addInvoice } = useInvoice();
   const {
     register,
@@ -136,7 +152,7 @@ const InvoiceEditAdd = ({ isOpen, closeModal, invoiceData }) => {
     setItemsError(false);
     invoiceItems.length < 1
       ? setItemsError(true)
-      : addInvoice(data, invoiceItems.length,);
+      : addInvoice(data, invoiceItems.length, selected);
   };
 
   const addItem = () => {
@@ -277,7 +293,7 @@ const InvoiceEditAdd = ({ isOpen, closeModal, invoiceData }) => {
                         errors={errors}
                         value={invoiceData?.senderAddress?.city}
                         label="City"
-                        text="senderCity"
+                        text="clientCity"
                         register={register}
                         placeholder=""
                         inputStyle="w-full"
@@ -295,7 +311,7 @@ const InvoiceEditAdd = ({ isOpen, closeModal, invoiceData }) => {
                       />
                       <InputField
                         errors={errors}
-                        value={invoiceData?.senderAddress?.country}
+                        value={invoiceData?.clientAddress?.country}
                         label="Country"
                         text="clientCountry"
                         placeholder=""
@@ -326,7 +342,11 @@ const InvoiceEditAdd = ({ isOpen, closeModal, invoiceData }) => {
                         register={register}
                         placeholder=""
                         input={
-                          <PaymentSelect></PaymentSelect>
+                          <PaymentSelect
+                            paymentList={payment_type}
+                            selected={selected}
+                            setSelected={setSelected}
+                          ></PaymentSelect>
                         }
                       ></InputField>
                     </div>
@@ -364,6 +384,7 @@ const InvoiceEditAdd = ({ isOpen, closeModal, invoiceData }) => {
                         return (
                           <EditListItem
                             errors={errors}
+                            value={name || `item${idx}`}
                             register={register}
                             key={`item${idx}`}
                             itemName={`item${idx}`}

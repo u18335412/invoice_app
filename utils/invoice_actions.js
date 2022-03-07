@@ -12,33 +12,40 @@ const generateId = () => {
   return id;
 };
 
-export const useInvoice = () => {
-  const removeInvoice = useStore((state) => state.removeInvoice);
+const formatedDate = () => {
+  var current = new Date().toISOString().slice(0, 10);
+  return current;
+};
 
-  const addInvoice = (data, itemCount) => {
+export const useInvoice = () => {
+  const removeInvoiceFromStore = useStore((state) => state.removeInvoice);
+  const addInvoiceToStore = useStore((state) => state.addInvoice);
+  const addInvoice = (data, itemsCount, paymentTerms) => {
     const items = [];
     const invoice = {
       id: generateId(),
-      description: data.description,
-      paymentTerms: "",
-      clientName: data.clientName,
-      clientEmail: data.clientEmail,
+      createdAt: formatedDate(),
+      paymentDue: data.date,
+      description: data?.description,
+      paymentTerms,
+      clientName: data?.clientName,
+      clientEmail: data?.clientEmail,
       status: "pending",
       senderAddress: {
-        street: data.senderStreet,
-        city: data.senderCity,
-        postCode: data.senderPostCode,
-        country: data.senderCountry,
+        street: data?.senderStreet,
+        city: data?.senderCity,
+        postCode: data?.senderPostCode,
+        country: data?.senderCountry,
       },
       clientAddress: {
-        street: data.clientStreet,
-        city: data.clientCity,
-        postCode: data.clientCode,
-        country: data.clientCountry,
+        street: data?.clientStreet,
+        city: data?.clientCity,
+        postCode: data?.clientPostCode,
+        country: data?.clientCountry,
       },
     };
-
-    itemCount = itemCount - 1;
+    let itemCount = itemsCount - 1;
+    let total = 0;
     while (itemCount >= 0) {
       const item = {
         name: data[`item${itemCount}Name`],
@@ -46,17 +53,20 @@ export const useInvoice = () => {
         price: data[`item${itemCount}Price`],
         total: data[`item${itemCount}Total`],
       };
+      total += parseInt(data[`item${itemCount}Total`]);
       items.push(item);
       itemCount--;
     }
-    console.table(invoice);
+    invoice.items = items;
+    invoice.total = total;
+    addInvoiceToStore(invoice);
   };
 
   const editInvoice = (data) => {
-    console.log(data);
+    // console.log(data);
   };
 
-  const deleteInvoice = (id) => removeInvoice(id);
+  const deleteInvoice = (id) => removeInvoiceFromStore(id);
 
   return {
     addInvoice,

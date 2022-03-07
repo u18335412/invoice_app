@@ -3,11 +3,7 @@ import { useState } from "react";
 import { Listbox } from "@headlessui/react";
 import TransitionComponent from "./transition_component";
 
-const payment_type = ["Net 1 Day", "Net 7 Days", "Net 14 Days", "Net 30 Days"];
-
-export default function PaymentSelect() {
-  const [selected, setSelected] = useState(payment_type[0]);
-
+export default function PaymentSelect({ paymentList, selected, setSelected }) {
   return (
     <div className="">
       <Listbox value={selected} onChange={setSelected}>
@@ -20,7 +16,7 @@ export default function PaymentSelect() {
           </Listbox.Button>
           <TransitionComponent>
             <Listbox.Options className="absolute w-full py-1 mt-1 overflow-auto text-[.7rem] bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black text-[rgba(12,14,22,1)] divide-y-[1px] divide-[rgba(223,227,250,1)] font-bold ring-opacity-5 focus:outline-none">
-              {payment_type?.map((payment_type, personIdx) => (
+              {paymentList?.map((payment_type, personIdx) => (
                 <Listbox.Option
                   key={personIdx + payment_type}
                   className={({ active }) =>

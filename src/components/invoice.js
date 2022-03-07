@@ -33,7 +33,7 @@ const Invoice = ({
           <p className="text-[0.75rem] text-[rgba(126,136,195,1)]">
             {clientName}
           </p>
-          <p className="text-base font-bold ">£ {total.toString()}</p>
+          <p className="text-base font-bold ">£ {total?.toString()}</p>
           <p
             className={` w-[6.5rem] py-[.8rem] rounded-[6px] text-center font-bold ${
               status === "paid"
