@@ -1,7 +1,7 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 
-export default function DeleteModal({ isOpen, closeModal }) {
+export default function DeleteModal({ isOpen, closeModal, handleDelete, invoiceId }) {
   return (
     <>
       <Transition appear show={isOpen} as={Fragment}>
@@ -22,8 +22,6 @@ export default function DeleteModal({ isOpen, closeModal }) {
             >
               <Dialog.Overlay className="fixed inset-0 bg-black/50" />
             </Transition.Child>
-
-            {/* This element is to trick the browser into centering the modal contents. */}
             <span
               className="inline-block h-screen align-middle"
               aria-hidden="true"
@@ -48,8 +46,8 @@ export default function DeleteModal({ isOpen, closeModal }) {
                 </Dialog.Title>
                 <div className="mt-[0.813rem]">
                   <p className="text-[.7rem] leading-[22px] w-fit tracking-[-0.25px] text-[rgba(136,142,176,1)]">
-                    Are you sure you want to delete invoice #XM9141? This action
-                    cannot be undone.
+                    Are you sure you want to delete invoice #{invoiceId}? This
+                    action cannot be undone.
                   </p>
                 </div>
 
@@ -61,7 +59,7 @@ export default function DeleteModal({ isOpen, closeModal }) {
                     Cancel
                   </button>
                   <button
-                    onClick={() => console.log("Deleted!")}
+                    onClick={handleDelete}
                     className=" font-bold text-[0.75rem] px-[1.5rem] text-white rounded-full bg-[rgba(236,87,87,1)] py-[1rem]"
                   >
                     Delete

@@ -1,13 +1,14 @@
 /* eslint-disable @next/next/no-img-element */
-
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import PaymentSelect from "./payment _term_select";
 import { useForm } from "react-hook-form";
 import TransitionComponent from "./transition_component";
+import { useInvoice } from "../../utils/invoice_actions";
 
 const InputField = ({
   label,
+  placeholder,
   inputStyle,
   type,
   input,
@@ -40,14 +41,12 @@ const InputField = ({
       <>
         <input
           {...register(text, { required: true })}
-          placeholder={""}
+          placeholder={placeholder}
           value={value}
           type={type}
           name={text}
           className={`${inputStyle} h-[3rem] text-[.7rem] font-bold rounded-[.25rem] border-[1px] border-[rgba(223,227,250,1)] outline-none focus:border-opacity-100 focus:border-[rgba(124,93,250,1)] px-[1.25rem] ${
-            errors[`${text}`]
-              ? "border-[rgba(236,87,87,1)]"
-              : ""
+            errors[`${text}`] ? "border-[rgba(236,87,87,1)]" : ""
           }  `}
         />
       </>
@@ -55,31 +54,57 @@ const InputField = ({
   </div>
 );
 
-const EditListItem = ({ itemName, qty, price, total }) => {
+const EditListItem = ({ itemName, qty, price, total, register, errors }) => {
   return (
     <div className="mt-[1rem] flex justify-between items-center">
       <input
-        defaultValue={itemName}
+        {...register(`${itemName}Name`, { required: true })}
         type="text"
-        className="h-[3rem] px-[1.2rem] text-[.75rem] font-bold  w-[13.375rem] border-[1px] border-[rgba(223,227,250,1)] rounded-[.25rem]"
+        defaultValue={itemName}
+        name={`${itemName}Name`}
+        className={`h-[3rem] px-[1.2rem] focus:border-[rgba(124,93,250,1)] text-[.75rem] font-bold  w-[13.375rem] border-[1px] ${
+          errors[`${itemName}Name`]
+            ? "border-[rgba(236,87,87,1)]"
+            : "border-[rgba(223,227,250,1)]"
+        }  rounded-[.25rem]`}
       />
 
       <input
+        {...register(`${itemName}Qty`, { required: true })}
         defaultValue={qty}
         type="text"
-        className="h-[3rem] text-[.75rem] px-1 font-bold rounded-[.25rem] border-[1px] border-[rgba(223,227,250,1)] text-center w-[2.875rem]"
+        name={`${itemName}Qty`}
+        className={`h-[3rem] focus:border-[rgba(124,93,250,1)] text-[.75rem] px-1 font-bold rounded-[.25rem] border-[1px] ${
+          errors[`${itemName}Qty`]
+            ? "border-[rgba(236,87,87,1)]"
+            : "border-[rgba(223,227,250,1)]"
+        } text-center w-[2.875rem]`}
       />
 
       <input
+        {...register(`${itemName}Price`, { required: true })}
+        placeholder="0.0"
         defaultValue={price}
         type="text"
-        className="h-[3rem] text-[.75rem] font-bold  rounded-[.25rem] border-[1px] border-[rgba(223,227,250,1)] px-[1.2rem] w-[6.25rem]"
+        name={`${itemName}Price`}
+        className={`h-[3rem] text-[.75rem] focus:border-[rgba(124,93,250,1)] font-bold  rounded-[.25rem] border-[1px] ${
+          errors[`${itemName}Price`]
+            ? "border-[rgba(236,87,87,1)]"
+            : "border-[rgba(223,227,250,1)]"
+        } px-[1.2rem] w-[6.25rem]`}
       />
 
       <input
+        {...register(`${itemName}Total`, { required: true })}
+        placeholder="0.0"
         text="text"
         defaultValue={total}
-        className="h-[3rem] bg-transparent text-[.75rem] rounded-[.25rem] font-bold w-[3rem] text-[rgba(119,127,152,1)]"
+        name={`${itemName}Total`}
+        className={`h-[3rem] border-[1px] focus:border-[rgba(124,93,250,1)] bg-transparent text-[.75rem] rounded-[.25rem] font-bold w-[3rem] ${
+          errors[`${itemName}Name`]
+            ? "border-[rgba(236,87,87,1)]"
+            : "border-[rgba(223,227,250,1)]"
+        } text-[rgba(119,127,152,1)] px-[.2rem]`}
       />
 
       <img
@@ -91,7 +116,8 @@ const EditListItem = ({ itemName, qty, price, total }) => {
   );
 };
 
-const InvoiceEditAdd = ({ isOpen, closeModal, invoiceData, setData }) => {
+const InvoiceEditAdd = ({ isOpen, closeModal, invoiceData }) => {
+  const { editInvoice, addInvoice } = useInvoice();
   const {
     register,
     handleSubmit,
@@ -100,9 +126,22 @@ const InvoiceEditAdd = ({ isOpen, closeModal, invoiceData, setData }) => {
   } = useForm();
   const [invoiceItems, setInvoiceItems] = useState(invoiceData?.items || []);
   const [itemsError, setItemsError] = useState(false);
-  const handle = (data) => {
-    console.table(data);
-    invoiceItems.length < 1 ? setItemsError(true) : setItemsError(false);
+
+  const handleEditInvoice = (data) => {
+    setItemsError(false);
+    invoiceItems.length < 1 ? setItemsError(true) : editInvoice(data);
+  };
+
+  const handleAddInvoice = (data) => {
+    setItemsError(false);
+    invoiceItems.length < 1
+      ? setItemsError(true)
+      : addInvoice(data, invoiceItems.length,);
+  };
+
+  const addItem = () => {
+    const item = { name: "", quantity: "", price: "", total: "" };
+    setInvoiceItems([...invoiceItems, item]);
   };
 
   return (
@@ -140,9 +179,9 @@ const InvoiceEditAdd = ({ isOpen, closeModal, invoiceData, setData }) => {
                   <p className="font-bold text-[1.5rem]">
                     {invoiceData && Object.keys(invoiceData).length !== 0 ? (
                       <>
-                        Edit
+                        Edit{" "}
                         <span className="text-[rgba(136,142,176,1)]">#</span>
-                        XM9141
+                        {invoiceData?.id}
                       </>
                     ) : (
                       <>New Invoice</>
@@ -286,7 +325,9 @@ const InvoiceEditAdd = ({ isOpen, closeModal, invoiceData, setData }) => {
                         text="paymentTerms"
                         register={register}
                         placeholder=""
-                        input={<PaymentSelect></PaymentSelect>}
+                        input={
+                          <PaymentSelect></PaymentSelect>
+                        }
                       ></InputField>
                     </div>
                     <InputField
@@ -318,20 +359,26 @@ const InvoiceEditAdd = ({ isOpen, closeModal, invoiceData, setData }) => {
                         />
                       </p>
                     </div>
+                    {invoiceItems?.map(
+                      ({ name, quantity, price, total }, idx) => {
+                        return (
+                          <EditListItem
+                            errors={errors}
+                            register={register}
+                            key={`item${idx}`}
+                            itemName={`item${idx}`}
+                            qty={quantity}
+                            price={price}
+                            total={total}
+                          />
+                        );
+                      }
+                    )}
 
-                    {invoiceItems.map(({ name, quantity, price, total }) => {
-                      return (
-                        <EditListItem
-                          key={name}
-                          itemName={name}
-                          qty={quantity}
-                          price={price}
-                          total={total}
-                        />
-                      );
-                    })}
-
-                    <button className="mt-[2.188rem] w-full text-[.75rem] text-[rgba(126,136,195,1)] hover:bg-[rgba(223,227,250,1)] transition-all py-4 rounded-full font-bold flex justify-center items-center">
+                    <button
+                      onClick={addItem}
+                      className="mt-[2.188rem] w-full text-[.75rem] text-[rgba(126,136,195,1)] hover:bg-[rgba(223,227,250,1)] transition-all py-4 rounded-full font-bold flex justify-center items-center"
+                    >
                       <img src="/assets/icon-plus.svg" alt="plus icon" />
                       Add New Item
                     </button>
@@ -353,7 +400,10 @@ const InvoiceEditAdd = ({ isOpen, closeModal, invoiceData, setData }) => {
                           <button className="font-bold py-[.5rem] h-[3rem] px-[1.25rem] text-[rgba(126,136,195,1)]">
                             Cancel
                           </button>
-                          <button className="text-white text-[.75rem] font-bold h-[3rem] py-[.52rem] px-[1.25rem] rounded-full bg-[rgba(124,93,250,1)]">
+                          <button
+                            onClick={handleSubmit(handleEditInvoice)}
+                            className="text-white text-[.75rem] font-bold h-[3rem] py-[.52rem] px-[1.25rem] rounded-full bg-[rgba(124,93,250,1)]"
+                          >
                             Save Changes
                           </button>
                         </>
@@ -372,7 +422,7 @@ const InvoiceEditAdd = ({ isOpen, closeModal, invoiceData, setData }) => {
                               Save as Draft
                             </button>
                             <button
-                              onClick={handleSubmit(handle)}
+                              onClick={handleSubmit(handleAddInvoice)}
                               className="text-white text-[.75rem] font-bold h-[3rem] py-[.52rem] px-[1.25rem] hover:bg-[rgba(146,119,255,1)] transition-all rounded-full bg-[rgba(124,93,250,1)]"
                             >
                               Save & Send
