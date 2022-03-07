@@ -2,6 +2,8 @@
 import { useState } from "react";
 import TransitionComponent from "./transition_component";
 
+import { useRouter } from "next/router";
+
 const Invoice = ({
   invoice: { id, paymentDue, clientName, total, status },
   filter,
@@ -9,10 +11,12 @@ const Invoice = ({
   const [showing, setShowing] = useState(
     filter === "" || status === filter.toLowerCase()
   );
+  const router = useRouter();
 
   return (
     <TransitionComponent showing={showing}>
       <li
+        onClick={() => router.push(`invoice/${id}`)}
         tabIndex={0}
         className="w-full flex justify-between rounded-[.5rem] px-[1.5rem] items-center h-[4.5rem] gap-x-[1.25rem] transition-all cursor-pointer hover:ring-1 hover:ring-[rgb(124,93,250)]
         [box-shadow:0px_10px_10px_-10px_rgba(72,_84,_159,_0.100397);]
