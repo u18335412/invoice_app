@@ -1,30 +1,34 @@
 /* eslint-disable @next/next/no-img-element */
 import Contanier from "../src/components/container";
 import Invoice from "../src/components/invoice";
-import data from "../data.json";
 import FilterPopover from "../src/components/filter_popover";
 import { useEffect, useState } from "react";
 import InvoiceEditAdd from "../src/components/invoice_edit";
 import NoInvoiceFound from "../src/components/no_invoice_found";
+import useStore from "../src/store/zuestand";
 
 export default function Home() {
-  const [filtered, setFilterd] = useState(data);
+  const invoices = useStore((state) => state.invoices);
+  const [filtered, setFilterd] = useState(invoices);
   const [filter, setFilter] = useState("");
   const [newInvoiceData, setNewInvoiceData] = useState({});
   let [isAddOpen, setAddIsOpen] = useState(false);
 
   useEffect(() => {
-    setFilterd(
-      data.filter(
-        (invoice) =>
-          filter === "" ||
-          (filter !== "" && invoice.status === filter.toLocaleLowerCase())
-      )
-    );
-  }, [filter, setFilter]);
+    if (filter != "") {
+      setFilterd(
+        invoices.filter(
+          (invoice) =>
+            filter === "" ||
+            (filter !== "" && invoice.status === filter.toLocaleLowerCase())
+        )
+      );
+    }
+  }, [filter, setFilter, invoices]);
 
   return (
     <>
+      {console.log("here")}
       <main className="">
         <Contanier>
           <InvoiceEditAdd
@@ -33,6 +37,7 @@ export default function Home() {
             invoiceData={newInvoiceData}
             setData={setNewInvoiceData}
           />
+
           <div className="flex justify-between xl:pt-[4.5rem] md:pt-[3.5rem]">
             <div>
               <p className=" font-bold text-[2rem]">Invoices</p>
@@ -68,8 +73,8 @@ export default function Home() {
               filtered.map((invoice) => {
                 return (
                   <Invoice
-                    filter={filter}
                     key={invoice?.id}
+                    filter={filter}
                     invoice={invoice}
                   />
                 );
