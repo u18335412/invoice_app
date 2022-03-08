@@ -7,16 +7,17 @@ import DeleteModal from "../../src/components/delete_modal";
 import useStore from "../../src/store/zuestand";
 import { useRouter } from "next/router";
 import { useInvoice } from "../../utils/invoice_actions";
+import Status from "../../src/components/status_componet";
 
 const ViewInvoice = () => {
-  const { deleteInvoice, editInvoice } = useInvoice();
-  const data = useStore((state) => state.invoices);
   const router = useRouter();
   const { id } = router.query;
+  const { deleteInvoice, markAsStatus } = useInvoice();
   let [isEditOpen, setEditIsOpen] = useState(false);
   let [isDeleteOpen, setDeleteIsOpen] = useState(false);
-  const [invoiceData, setData] = useState(
-    data.filter((invoice) => invoice.id == id)[0]
+
+  const invoiceData = useStore(
+    (state) => state.invoices.filter((i) => i.id == id)[0]
   );
 
   const handleDelete = () => {
@@ -25,8 +26,6 @@ const ViewInvoice = () => {
     router.push("/");
   };
 
-  const handleEdit = () => editInvoice();
-
   return (
     <main className="pt-[4rem]">
       <Contanier>
@@ -34,7 +33,6 @@ const ViewInvoice = () => {
           closeModal={() => setEditIsOpen(false)}
           isOpen={isEditOpen}
           invoiceData={invoiceData}
-          setData={setData}
         />
         <DeleteModal
           closeModal={() => setDeleteIsOpen(false)}
@@ -56,29 +54,7 @@ const ViewInvoice = () => {
         <div className="mt-[2rem] text-[.75rem] px-[2rem] py-[1.25rem] justify-between flex rounded-[.5rem] ">
           <div className="flex items-center gap-x-[1rem] w-fit">
             <p>Status</p>
-            <div
-              className={`w-full px-[1.125rem] py-[.8rem] rounded-md  flex items-center font-bold gap-x-[.5rem]
-              ${
-                invoiceData?.status === "paid"
-                  ? "text-[rgba(51,214,159,1)] bg-[rgba(51,214,159,1)]/5 "
-                  : invoiceData?.status === "pending"
-                  ? "text-[rgba(255,143,0,1)] bg-[rgba(255,143,0,1)]/5"
-                  : "text-[rgba(55,_59,_83,_1)] bg-[rgba(55,59,83,1)]/5"
-              }
-               [filter:drop-shadow(0px_4px_4px_rgba(0,0,0,0.25))]`}
-            >
-              <span
-                className={`w-2 h-2 rounded-full
-                ${
-                  invoiceData?.status === "paid"
-                    ? "bg-[rgba(51,214,159,1)]"
-                    : invoiceData?.status === "pending"
-                    ? "bg-[rgba(255,143,0,1)]"
-                    : "bg-[rgba(55,59,83,1)]"
-                }`}
-              ></span>
-              <p className="">{invoiceData?.status}</p>
-            </div>
+            <Status status={invoiceData?.status} />
           </div>
           <div className="flex gap-x-[.5rem] w-fit">
             <button
@@ -89,12 +65,17 @@ const ViewInvoice = () => {
             </button>
             <button
               onClick={() => setDeleteIsOpen(true)}
-              className=" font-bold text-[0.75rem] px-[1.5rem] text-white rounded-full bg-[rgba(236,87,87,1)] py-[1rem] h-[3rem]"
+              className=" font-bold text-[0.75rem] px-[1.5rem] text-white rounded-full bg-[rgba(236,87,87,1)] hover:bg-[rgba(255,151,151,1)] transition-all py-[1rem] h-[3rem]"
             >
               Delete
             </button>
-            <button className=" font-bold px-[1.5rem] py-[1rem] bg-[rgba(124,93,250,1)] rounded-full transition-all hover:bg-[rgba(146,119,255,1)] text-white text-[0.75rem]">
-              Mark as Paid
+            <button
+              onClick={() => markAsStatus(invoiceData?.id)}
+              className=" font-bold px-[1.5rem] py-[1rem] bg-[rgba(124,93,250,1)] rounded-full transition-all hover:bg-[rgba(146,119,255,1)] text-white text-[0.75rem]"
+            >
+              {invoiceData?.status === "paid"
+                ? "Mark as Pending"
+                : "Mark as Paid"}
             </button>
           </div>
         </div>
@@ -124,13 +105,25 @@ const ViewInvoice = () => {
                 <span className="text-[rgba(126,136,195,1)] text-[.75rem]">
                   Invoice Date
                 </span>
-                <span className="font-bold">{invoiceData?.createdAt}</span>
+                <span className="font-bold">
+                  {new Date(invoiceData?.createdAt).toLocaleString("default", {
+                    year: "numeric",
+                    month: "short",
+                    day: "numeric",
+                  })}
+                </span>
               </p>
               <p className="flex flex-col gap-y-[.75rem] w-fit">
                 <span className="text-[rgba(126,136,195,1)] text-[.75rem]">
                   Payment Date
                 </span>
-                <span className="font-bold">{invoiceData?.paymentDue}</span>
+                <span className="font-bold">
+                  {new Date(invoiceData?.paymentDue).toLocaleString("default", {
+                    year: "numeric",
+                    month: "short",
+                    day: "numeric",
+                  })}
+                </span>
               </p>
             </div>
             <div>

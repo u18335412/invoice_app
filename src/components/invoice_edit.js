@@ -5,6 +5,7 @@ import PaymentSelect from "./payment _term_select";
 import { useForm } from "react-hook-form";
 import TransitionComponent from "./transition_component";
 import { useInvoice } from "../../utils/invoice_actions";
+import useStore from "../store/zuestand";
 
 const InputField = ({
   label,
@@ -42,7 +43,7 @@ const InputField = ({
         <input
           {...register(text, { required: true })}
           placeholder={placeholder}
-          value={value}
+          defaultValue={value}
           type={type}
           name={text}
           className={`${inputStyle} h-[3rem] text-[.7rem] font-bold rounded-[.25rem] border-[1px] border-[rgba(223,227,250,1)] outline-none focus:border-opacity-100 focus:border-[rgba(124,93,250,1)] px-[1.25rem] ${
@@ -131,7 +132,6 @@ const InvoiceEditAdd = ({ isOpen, closeModal, invoiceData }) => {
     "Net 14 Days",
     "Net 30 Days",
   ];
-  const { removeInvoice } = useInvoice();
   const [selected, setSelected] = useState(payment_type[0]);
   const { editInvoice, addInvoice } = useInvoice();
   const {
@@ -145,7 +145,15 @@ const InvoiceEditAdd = ({ isOpen, closeModal, invoiceData }) => {
 
   const handleEditInvoice = (data) => {
     setItemsError(false);
-    invoiceItems.length < 1 ? setItemsError(true) : editInvoice(data);
+    invoiceItems.length < 1
+      ? setItemsError(true)
+      : editInvoice(
+          { ...data, id: invoiceData.id },
+          invoiceItems.length,
+          selected
+        );
+
+    closeModal();
   };
 
   const handleAddInvoice = (data) => {
@@ -418,12 +426,15 @@ const InvoiceEditAdd = ({ isOpen, closeModal, invoiceData }) => {
                     <div className="flex text-[.75rem] gap-x-[.5rem] mt-[2.75rem] justify-end ">
                       {invoiceData && Object.keys(invoiceData).length > 0 ? (
                         <>
-                          <button className="font-bold py-[.5rem] h-[3rem] px-[1.25rem] text-[rgba(126,136,195,1)]">
+                          <button
+                            onClick={closeModal}
+                            className="font-bold h-[3rem] text-[rgba(126,136,195,1)] py-[.52rem] px-[1.25rem] hover:bg-[rgba(223,227,250,1)] transition-all rounded-full "
+                          >
                             Cancel
                           </button>
                           <button
                             onClick={handleSubmit(handleEditInvoice)}
-                            className="text-white text-[.75rem] font-bold h-[3rem] py-[.52rem] px-[1.25rem] rounded-full bg-[rgba(124,93,250,1)]"
+                            className="text-white text-[.75rem] font-bold h-[3rem] py-[.52rem] px-[1.25rem] hover:bg-[rgba(146,119,255,1)] transition-all rounded-full bg-[rgba(124,93,250,1)]"
                           >
                             Save Changes
                           </button>
