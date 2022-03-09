@@ -27,7 +27,7 @@ const ViewInvoice = () => {
   };
 
   return (
-    <main className="pt-[4rem]">
+    <main className="pt-[4rem] min-h-screen">
       <Contanier>
         <InvoiceEditAdd
           closeModal={() => setEditIsOpen(false)}
@@ -42,7 +42,7 @@ const ViewInvoice = () => {
         />
 
         <Link href="/" passHref>
-          <button className="flex text-[0.75rem] items-center justify-center font-bold gap-x-[1.75rem]">
+          <button className="flex text-[0.7rem] items-center justify-center font-bold gap-x-[1.75rem]">
             <img
               src="/assets/icon-arrow-left.svg"
               className="w-2 h-2"
@@ -51,7 +51,7 @@ const ViewInvoice = () => {
             Go back
           </button>
         </Link>
-        <div className="mt-[2rem] text-[.75rem] px-[2rem] py-[1.25rem] justify-between flex rounded-[.5rem] ">
+        <div className="mt-[2rem] text-[.7rem] dark:bg-[rgba(30,33,57,1)] px-[2rem] py-[1.25rem] justify-between flex rounded-[.5rem] ">
           <div className="flex items-center gap-x-[1rem] w-fit">
             <p>Status</p>
             <Status status={invoiceData?.status} />
@@ -59,7 +59,7 @@ const ViewInvoice = () => {
           <div className="flex gap-x-[.5rem] w-fit">
             <button
               onClick={() => setEditIsOpen(true)}
-              className="text-[rgba(126,136,195,1)] rounded-full transition-all w-[4.563rem] [h-3rem] hover:bg-[rgba(223,227,250,1)] text-[.75rem] font-bold px-[1.2rem]"
+              className="text-[rgba(126,136,195,1)] rounded-full transition-all dark:text-[rgba(223,227,250,1)] dark:bg-[rgba(37,41,69,1)] w-[4.563rem] [h-3rem] hover:bg-[rgba(223,227,250,1)] text-[.75rem] hover:dark:bg-white hover:dark:text-[rgba(37,41,69,1)] font-bold px-[1.2rem]"
             >
               Edit
             </button>
@@ -71,7 +71,7 @@ const ViewInvoice = () => {
             </button>
             <button
               onClick={() => markAsStatus(invoiceData?.id)}
-              className=" font-bold px-[1.5rem] py-[1rem] bg-[rgba(124,93,250,1)] rounded-full transition-all hover:bg-[rgba(146,119,255,1)] text-white text-[0.75rem]"
+              className=" font-bold px-[1.5rem] py-[1rem] bg-[rgba(124,93,250,1)] rounded-full h-[3rem] transition-all hover:bg-[rgba(146,119,255,1)] text-white text-[0.75rem]"
             >
               {invoiceData?.status === "paid"
                 ? "Mark as Pending"
@@ -83,15 +83,17 @@ const ViewInvoice = () => {
           <div className="flex justify-between ">
             <div className="">
               <p className="font-bold">
-                <span className="text-[rgba(136,142,176,1)]">#</span>
+                <span className="text-[rgba(136,142,176,1)] dark:text-[rgba(223,227,250,1)]">
+                  #
+                </span>
                 {invoiceData?.id}
               </p>
-              <p className="text-[.75rem] text-[rgba(126,136,195,1)]">
+              <p className="text-[.7rem]  dark:text-[rgba(223,227,250,1)] text-[rgba(126,136,195,1)]">
                 {invoiceData?.description}
               </p>
             </div>
             <div className="flex">
-              <p className="flex flex-col text-right text-[.75rem] text-[rgba(126,136,195,1)]">
+              <p className="flex flex-col text-right dark:text-[rgba(223,227,250,1)]  text-[.7rem] text-[rgba(126,136,195,1)]">
                 <span>{invoiceData?.senderAddress?.street}</span>
                 <span>{invoiceData?.senderAddress?.city}</span>
                 <span>{invoiceData?.senderAddress?.postCode}</span>
@@ -102,7 +104,7 @@ const ViewInvoice = () => {
           <div className="flex mt-[3.063rem] md:justify-between">
             <div className="space-y-[2rem]">
               <p className="flex flex-col gap-y-[.75rem] w-fit">
-                <span className="text-[rgba(126,136,195,1)] text-[.75rem]">
+                <span className="text-[rgba(126,136,195,1)]  dark:text-[rgba(223,227,250,1)]  text-[.75rem]">
                   Invoice Date
                 </span>
                 <span className="font-bold">
@@ -113,11 +115,11 @@ const ViewInvoice = () => {
                   })}
                 </span>
               </p>
-              <p className="flex flex-col gap-y-[.75rem] w-fit">
-                <span className="text-[rgba(126,136,195,1)] text-[.75rem]">
-                  Payment Date
+              <p className="flex flex-col gap-y-[.7rem] w-fit">
+                <span className="text-[rgba(126,136,195,1)]  dark:text-[rgba(223,227,250,1)]  text-[.75rem]">
+                  Payment Due
                 </span>
-                <span className="font-bold">
+                <span className="font-bold xl:text-base md:text-[15px]">
                   {new Date(invoiceData?.paymentDue).toLocaleString("default", {
                     year: "numeric",
                     month: "short",
@@ -128,11 +130,13 @@ const ViewInvoice = () => {
             </div>
             <div>
               <p className="flex flex-col gap-y-[.75rem] w-fit">
-                <span className="text-[rgba(126,136,195,1)] text-[.75rem]">
+                <span className="text-[rgba(126,136,195,1)]  dark:text-[rgba(223,227,250,1)]  text-[.7rem]">
                   Bill To
                 </span>
-                <span className="font-bold">{invoiceData?.clientName}</span>
-                <span className="text-[rgba(126,136,195,1)] text-[.75rem] flex flex-col">
+                <span className="font-bold dark:text-white xl:text-base md:text-[15px]">
+                  {invoiceData?.clientName}
+                </span>
+                <span className="text-[rgba(126,136,195,1)] dark:text-[rgba(223,227,250,1)] text-[.7rem] flex flex-col">
                   <span>{invoiceData?.clientAddress?.street}</span>
                   <span>{invoiceData?.clientAddress?.city}</span>
                   <span>{invoiceData?.clientAddress?.postCode}</span>
@@ -142,35 +146,37 @@ const ViewInvoice = () => {
             </div>
             <div>
               <p className="flex flex-col gap-y-[.75rem] w-fit">
-                <span className="text-[rgba(126,136,195,1)] text-[.75rem]">
+                <span className="text-[rgba(126,136,195,1)]  dark:text-[rgba(223,227,250,1)]  text-[.75rem]">
                   Sent To
                 </span>
-                <span className="font-bold">{invoiceData?.clientEmail}</span>
+                <span className="font-bold dark:text-white xl:text-base md:text-[15px]">
+                  {invoiceData?.clientEmail}
+                </span>
               </p>
             </div>
           </div>
           <div className=" md:mt-[3rem]">
-            <div className="p-[2rem] w-full">
+            <div className="p-[2rem] w-full rounded-t-lg dark:bg-[rgba(37,41,69,1)]">
               <table className="w-full">
                 <thead>
                   <tr>
                     <th className="text-left ">
-                      <span className="text-[rgba(126,136,195,1)] font-normal text-[.75rem]">
+                      <span className="text-[rgba(126,136,195,1)]  dark:text-[rgba(223,227,250,1)]  font-normal text-[.75rem]">
                         Item name
                       </span>
                     </th>
                     <th className="text-center ">
-                      <span className="text-[rgba(126,136,195,1)] font-normal text-[.75rem]">
+                      <span className="text-[rgba(126,136,195,1)]  dark:text-[rgba(223,227,250,1)]  font-normal text-[.75rem]">
                         QTY.
                       </span>
                     </th>
                     <th className="text-right ">
-                      <span className="text-[rgba(126,136,195,1)] font-normal text-[.75rem]">
+                      <span className="text-[rgba(126,136,195,1)]  dark:text-[rgba(223,227,250,1)]  font-normal text-[.75rem]">
                         Price
                       </span>
                     </th>
                     <th className="text-right ">
-                      <span className="text-[rgba(126,136,195,1)] font-normal text-[.75rem]">
+                      <span className="text-[rgba(126,136,195,1)]  dark:text-[rgba(223,227,250,1)]  font-normal text-[.75rem]">
                         Total
                       </span>
                     </th>
@@ -187,12 +193,12 @@ const ViewInvoice = () => {
                           {name}
                         </td>
                         <td className=" text-center pt-[2rem]">
-                          <span className="text-[rgba(126,136,195,1)] font-bold text-[.75rem]">
+                          <span className="text-[rgba(126,136,195,1)] font-bold dark:text-[rgba(223,227,250,1)] text-[.75rem]">
                             {quantity}
                           </span>
                         </td>
                         <td className="text-right pt-[2rem] ">
-                          <span className="text-[rgba(126,136,195,1)] font-bold text-[.75rem]">
+                          <span className="text-[rgba(126,136,195,1)] font-bold dark:text-[rgba(223,227,250,1)] text-[.75rem]">
                             £ {price}
                           </span>
                         </td>
@@ -207,7 +213,7 @@ const ViewInvoice = () => {
                 </tbody>
               </table>
             </div>
-            <div className="bg-[rgba(55,59,83,1)] p-[2rem] w-full h-[5rem] rounded-b-[8px] flex items-center text-white justify-between">
+            <div className="bg-[rgba(55,59,83,1)] dark:bg-[rgba(12,14,22,1)] p-[2rem] w-full h-[5rem] rounded-b-[8px] flex items-center text-white justify-between">
               <p className=" text-[0.74rem]">Amount Due</p>
               <p className="font-bold text-[1.5rem]">£ {invoiceData?.total}</p>
             </div>

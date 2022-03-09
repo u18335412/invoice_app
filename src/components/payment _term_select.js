@@ -8,20 +8,20 @@ export default function PaymentSelect({ paymentList, selected, setSelected }) {
     <div className="">
       <Listbox value={selected} onChange={setSelected}>
         <div className="relative mt-1">
-          <Listbox.Button className="relative w-[15rem] py-4 px-[1.25rem] text-left text-[0.7rem] bg-white cursor-pointer ring-[rgba(223,227,250,1)]  rounded-[.25rem] focus:outline-none ring-1 font-bold focus-visible:ring-opacity-75 focus-visible:ring-white h-[3rem] focus-visible:ring-[rgba(124,93,250,1)]">
+          <Listbox.Button className="relative w-[15rem] py-4 px-[1.25rem] text-left text-[0.7rem] bg-white dark:bg-[rgba(30,33,57,1)] cursor-pointer ring-[rgba(223,227,250,1)] dark:ring-[rgb(37,41,69)] dark:ring-0 dark:text-white rounded-[.25rem] focus:outline-none ring-1 font-bold focus-visible:ring-opacity-75 focus-visible:ring-white h-[3rem] focus-visible:ring-[rgba(124,93,250,1)]">
             <span className="block truncate">{selected}</span>
             <span className="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none">
               <img src="/assets/icon-arrow-down.svg" alt="arrow down" />
             </span>
           </Listbox.Button>
           <TransitionComponent>
-            <Listbox.Options className="absolute w-full py-1 mt-1 overflow-auto text-[.7rem] bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black text-[rgba(12,14,22,1)] divide-y-[1px] divide-[rgba(223,227,250,1)] font-bold ring-opacity-5 focus:outline-none">
+            <Listbox.Options className="absolute w-full mt-2 overflow-auto text-[.7rem] bg-whte dark:text-[rgba(223,227,250,1)] border-0 dark:bg-[rgba(37,41,69,1)] rounded-md shadow-lg max-h-60 text-[rgba(12,14,22,1)] focus-visible:ring-[rgba(124,93,250,1)] dark:divide-[rgba(30,33,57,1)] divide-y-[1px] divide-[rgba(223,227,250,1)] font-bold ring-opacity-5 focus:outline-none">
               {paymentList?.map((payment_type, personIdx) => (
                 <Listbox.Option
                   key={personIdx + payment_type}
                   className={({ active }) =>
                     `cursor-pointer select-none transition-all relative py-4 divide-x-2 px-[1.5rem] pr-4 ${
-                      active ? "text-[rgba(124,93,250,1)] bg-white " : ""
+                      active ? "text-[rgba(124,93,250,1)]" : ""
                     }`
                   }
                   value={payment_type}

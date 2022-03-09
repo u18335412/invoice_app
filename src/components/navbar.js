@@ -1,11 +1,15 @@
 /* eslint-disable @next/next/no-img-element */
 import { useRouter } from "next/router";
+import TransitionComponent from "./transition_component";
 
-const Navbar = () => {
+const Navbar = ({ isDark, setIsDark }) => {
   const router = useRouter();
   return (
-    <nav className="flex md:flex-row justify-between xl:rounded-tr-[20px] xl:rounded-br-[20px] xl:h-full xl:min-h-screen md:h-[5rem] z-50 xl:absolute md:relative xl:flex-col inset-0 xl:w-[6.438rem] md:w-full overflow-hidden dark:bg-[rgb(37,41,69)]">
-      <div className=" xl:flex md:block cursor-pointer" onClick={() => router.push("/")}>
+    <nav className="flex md:flex-row justify-between xl:rounded-tr-[20px] xl:rounded-br-[20px] xl:h-full xl:min-h-screen md:h-[5rem] z-50 xl:absolute md:relative xl:flex-col inset-0 xl:w-[6.438rem] md:w-full overflow-hidden bg-[rgb(37,41,69)]">
+      <div
+        className="cursor-pointer xl:flex bg-lime-300s md:block"
+        onClick={() => router.push("/")}
+      >
         <div
           className="xl:w-full md:w-[5rem] flex rounded-br-[20px] overflow-hidden xl:h-[6.438rem] md:h-full flex-col-reverse bg-[rgb(124,93,250)] relative justify-center items-center"
           alt="logo icon"
@@ -19,22 +23,44 @@ const Navbar = () => {
           />
         </div>
       </div>
-      <div className="flex md:flex-row xl:gap-x-0 md:gap-x-[2rem] md:w-[7.313] xl:flex-col justify-center items-center">
-        <div className="md:w-full xl:w-fit">
-          <img
-            src="/assets/icon-sun.svg"
-            className="w-[1.199rem] h-[1.199rem]"
-            alt="light theme icon"
+      <div className="flex xl:w-full md:w-fit md:flex-row xl:gap-x-0 md:gap-x-[2rem] xl:flex-col justify-center items-center">
+        <div className="relative md:w-full xl:w-fit">
+          <input
+            onClick={() => setIsDark(!isDark)}
+            defaultValue={isDark}
+            type="checkbox"
+            className="w-[1.199rem] cursor-pointer appearance-none h-[1.199rem] peer"
+            name="theme-toggle"
+            id="theme-toggle"
           />
+
+          {isDark && (
+            <TransitionComponent showing={true}>
+              <img
+                src="/assets/icon-sun.svg"
+                className="w-[1.199rem] absolute pointer-events-none inset-0 h-[1.199rem]"
+                alt="light theme icon"
+              />
+            </TransitionComponent>
+          )}
+
+          {!isDark && (
+            <TransitionComponent showing={true}>
+              <img
+                src="/assets/icon-moon.svg"
+                className="w-[1.199rem] absolute pointer-events-none inset-0 h-[1.199rem]"
+                alt="dark theme icon"
+              />
+            </TransitionComponent>
+          )}
         </div>
         <div className="bg-[rgb(151,151,151)] md:h-full md:w-[1px] xl:w-full xl:h-[1px] xl:mt-[2.006rem] xl:mb-[1.563rem]"></div>
-        <div className=" xl:mb-[1.563rem] bg-rose-30 xl:mr-0 md:mr-[2rem] h-full w-full flex justify-center items-center">
-          <img
-            src="/assets/image-avatar.jpg"
-            className="xl:w-[2.5rem] xl:h-[2.5rem] rounded-full"
-            alt="image avatar"
-          />
-        </div>
+
+        <img
+          src="/assets/image-avatar.jpg"
+          className="md:w-[2rem] md:h-[2rem] md:mr-[2rem] xl:mr-0 xl:mb-[1.563rem]  xl:w-[2.5rem] xl:h-[2.5rem] rounded-full"
+          alt="image avatar"
+        />
       </div>
     </nav>
   );

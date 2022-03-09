@@ -7,7 +7,7 @@ const Status = ({ status }) => {
             ? "text-[rgba(51,214,159,1)] bg-[rgba(51,214,159,1)]/5 "
             : status === "pending"
             ? "text-[rgba(255,143,0,1)] bg-[rgba(255,143,0,1)]/5"
-            : "text-[rgba(55,_59,_83,_1)] bg-[rgba(55,59,83,1)]/5"
+            : "text-[rgba(55,_59,_83,_1)] dark:bg-[rgba(223,227,250,1)]/5 dark:text-[rgba(223,227,250,1)] bg-[rgba(55,59,83,1)]/5"
         }
          [filter:drop-shadow(0px_4px_4px_rgba(0,0,0,0.25))]`}
     >
@@ -18,7 +18,7 @@ const Status = ({ status }) => {
               ? "bg-[rgba(51,214,159,1)]"
               : status === "pending"
               ? "bg-[rgba(255,143,0,1)]"
-              : "bg-[rgba(55,59,83,1)]"
+              : "bg-[rgba(55,59,83,1)] dark:bg-[rgba(223,227,250,1)]"
           }`}
       ></span>
       <span className="">{status}</span>

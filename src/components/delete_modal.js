@@ -1,13 +1,22 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
+import useStore from "../store/zuestand";
 
-export default function DeleteModal({ isOpen, closeModal, handleDelete, invoiceId }) {
+export default function DeleteModal({
+  isOpen,
+  closeModal,
+  handleDelete,
+  invoiceId,
+}) {
+  const isDark = useStore((state) => state.isDark);
   return (
     <>
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog
           as="div"
-          className="fixed inset-0 z-10 overflow-y-auto"
+          className={`fixed ${
+            isDark ? "dark" : ""
+          } inset-0 z-10 overflow-y-auto`}
           onClose={closeModal}
         >
           <div className="min-h-screen px-4 text-center">
@@ -37,15 +46,15 @@ export default function DeleteModal({ isOpen, closeModal, handleDelete, invoiceI
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <div className="inline-block w-full max-w-md p-[3rem] my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-[.5rem]">
+              <div className="inline-block dark:bg-[rgba(30,33,57,1)] w-full max-w-md p-[3rem] my-8 [box-shadow:_0px_10px_10px_-10px_rgba(72,84,159,0.1)] overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-[.5rem]">
                 <Dialog.Title
                   as="h3"
-                  className="text-[1.5rem] font-bold leading-6 text-gray-900"
+                  className="text-[1.5rem] font-bold leading-6 dark:text-white text-gray-900"
                 >
                   Confirm Deletion
                 </Dialog.Title>
                 <div className="mt-[0.813rem]">
-                  <p className="text-[.7rem] leading-[22px] w-fit tracking-[-0.25px] text-[rgba(136,142,176,1)]">
+                  <p className="text-[.7rem] leading-[22px] w-fit tracking-[-0.25px] dark:text-[rgba(223,227,250,1)] text-[rgba(136,142,176,1)]">
                     Are you sure you want to delete invoice #{invoiceId}? This
                     action cannot be undone.
                   </p>
@@ -54,7 +63,7 @@ export default function DeleteModal({ isOpen, closeModal, handleDelete, invoiceI
                 <div className="flex gap-x-[.5rem] justify-end w-full mt-4">
                   <button
                     onClick={closeModal}
-                    className="text-[rgba(126,136,195,1)] text-[.75rem] font-bold px-[1.2rem]"
+                    className="text-[rgba(126,136,195,1)] dark:bg-[rgba(37,41,69,1)] text-[.75rem] font-bold px-[1.2rem] rounded-full"
                   >
                     Cancel
                   </button>

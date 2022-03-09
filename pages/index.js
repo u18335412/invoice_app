@@ -2,7 +2,7 @@
 import Contanier from "../src/components/container";
 import Invoice from "../src/components/invoice";
 import FilterPopover from "../src/components/filter_popover";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import InvoiceEditAdd from "../src/components/invoice_edit";
 import NoInvoiceFound from "../src/components/no_invoice_found";
 import useStore from "../src/store/zuestand";
@@ -15,7 +15,7 @@ export default function Home() {
 
   return (
     <>
-      <main className="">
+      <main className="min-h-screen">
         <Contanier>
           <InvoiceEditAdd
             closeModal={() => setAddIsOpen(false)}
@@ -27,7 +27,7 @@ export default function Home() {
           <div className="flex justify-between xl:pt-[4.5rem] md:pt-[3.5rem]">
             <div>
               <p className=" font-bold text-[2rem]">Invoices</p>
-              <p className=" text-[0.75rem] text-[rgba(136,142,176,1)]">
+              <p className=" text-[0.75rem] dark:text-white text-[rgba(136,142,176,1)]">
                 There are {invoices.length} total invoices
               </p>
             </div>

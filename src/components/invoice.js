@@ -18,7 +18,7 @@ const Invoice = ({
       <li
         onClick={() => router.push(`invoice/${id}`)}
         tabIndex={0}
-        className="w-full flex justify-between rounded-[.5rem] px-[1.5rem] items-center h-[4.5rem] gap-x-[1.25rem] transition-all cursor-pointer hover:ring-1 hover:ring-[rgb(124,93,250)]
+        className="w-full flex justify-between rounded-[.5rem] px-[1.5rem] items-center h-[4.5rem] gap-x-[1.25rem] transition-all cursor-pointer hover:ring-1 hover:ring-[rgb(124,93,250)] dark:bg-[rgba(30,33,57,1)]
         [box-shadow:0px_10px_10px_-10px_rgba(72,_84,_159,_0.100397);]
     "
       >
@@ -27,10 +27,10 @@ const Invoice = ({
             <span className="text-[rgba(126,136,195,1)] ">#</span>
             {id}
           </p>
-          <p className="text-[0.75rem] text-left w-fit text-[rgba(126,136,195,1)]">
+          <p className="text-[0.75rem] text-left w-fit dark:text-white text-[rgba(126,136,195,1)]">
             Due {paymentDue}
           </p>
-          <p className="text-[0.75rem]  text-[rgba(126,136,195,1)]">
+          <p className="text-[0.75rem] dark:text-white  text-[rgba(126,136,195,1)]">
             {clientName}
           </p>
           <p className="text-base font-bold ">£ {total?.toString()}</p>
