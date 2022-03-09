@@ -5,7 +5,7 @@ const NoInvoiceFound = () => {
   return (
     <>
       <TransitionComponent showing={true}>
-        <div className="flex justify-center items-center dark:text-[rgba(223,227,250,1)] xl:mt-[8.813rem] mt-[25.313rem]">
+        <div className="flex justify-center items-center dark:text-[rgba(223,227,250,1)] xl:mt-[8.813rem] mt-[6.375rem] md:mt-[25.313rem]">
           <div className=" w-[15.125rem] text-center">
             <img
               src="/assets/illustration-empty.svg"

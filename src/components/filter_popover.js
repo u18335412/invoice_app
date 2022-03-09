@@ -8,8 +8,10 @@ export default function Filter({ setFilter, filter }) {
       <Popover className="relative">
         {({ open }) => (
           <>
-            <Popover.Button className="flex items-center h-[32px] font-bold text-[0.75rem] w-[7.575rem] gap-x-[1rem]">
-              <p>Filter by status</p>
+            <Popover.Button className="flex items-center h-[32px] font-bold text-[0.75rem] w-fit  gap-x-[1rem]">
+              <p>
+                Filter <span className="hidden md:inline">by status</span>
+              </p>
               <img
                 src="/assets/icon-arrow-down.svg"
                 className="w-[0.529rem] h-[0.264rem]"
