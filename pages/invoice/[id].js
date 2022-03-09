@@ -8,6 +8,10 @@ import useStore from "../../src/store/zuestand";
 import { useRouter } from "next/router";
 import { useInvoice } from "../../utils/invoice_actions";
 import Status from "../../src/components/status_componet";
+import DeleteButton from "../../src/components/delete_button";
+import EditButton from "../../src/components/edit_button";
+import StatusToggle from "../../src/components/toggle_status_button";
+import TableHeader from "../../src/components/table_row_header";
 
 const ViewInvoice = () => {
   const router = useRouter();
@@ -52,37 +56,24 @@ const ViewInvoice = () => {
           </button>
         </Link>
         <div className="mt-[2rem] text-[.7rem] dark:bg-[rgba(30,33,57,1)] px-[2rem] py-[1.25rem] justify-between flex rounded-[.5rem] ">
-          <div className="flex items-center gap-x-[1rem] w-fit">
+          <div className="flex justify-between md:justify-start w-full items-center gap-x-[1rem] md:w-fit">
             <p>Status</p>
             <Status status={invoiceData?.status} />
           </div>
-          <div className="flex gap-x-[.5rem] w-fit">
-            <button
-              onClick={() => setEditIsOpen(true)}
-              className="text-[rgba(126,136,195,1)] rounded-full transition-all dark:text-[rgba(223,227,250,1)] dark:bg-[rgba(37,41,69,1)] w-[4.563rem] [h-3rem] hover:bg-[rgba(223,227,250,1)] text-[.75rem] hover:dark:bg-white hover:dark:text-[rgba(37,41,69,1)] font-bold px-[1.2rem]"
-            >
-              Edit
-            </button>
-            <button
-              onClick={() => setDeleteIsOpen(true)}
-              className=" font-bold text-[0.75rem] px-[1.5rem] text-white rounded-full bg-[rgba(236,87,87,1)] hover:bg-[rgba(255,151,151,1)] transition-all py-[1rem] h-[3rem]"
-            >
-              Delete
-            </button>
-            <button
-              onClick={() => markAsStatus(invoiceData?.id)}
-              className=" font-bold px-[1.5rem] py-[1rem] bg-[rgba(124,93,250,1)] rounded-full h-[3rem] transition-all hover:bg-[rgba(146,119,255,1)] text-white text-[0.75rem]"
-            >
-              {invoiceData?.status === "paid"
-                ? "Mark as Pending"
-                : "Mark as Paid"}
-            </button>
+          <div className="md:flex gap-x-[.5rem] w-fit hidden">
+            <EditButton setEditIsOpen={setEditIsOpen} />
+            <DeleteButton setDeleteIsOpen={setDeleteIsOpen} />
+            <StatusToggle
+              invioceStatus={invoiceData?.status}
+              invoiceId={invoiceData?.id}
+              markAsStatus={markAsStatus}
+            ></StatusToggle>
           </div>
         </div>
-        <div className="p-[3rem] mt-[1.5rem]">
-          <div className="flex justify-between ">
+        <div className="md:p-[3rem] rounded-lg p-[1.5rem] mt-[1.5rem] dark:bg-[rgba(30,33,57,1)]">
+          <div className="flex flex-col md:flex-row md:justify-between md:gap-y-0 gap-y-[1.875rem]">
             <div className="">
-              <p className="font-bold">
+              <p className="font-bold text-[0.7rem]">
                 <span className="text-[rgba(136,142,176,1)] dark:text-[rgba(223,227,250,1)]">
                   #
                 </span>
@@ -93,7 +84,7 @@ const ViewInvoice = () => {
               </p>
             </div>
             <div className="flex">
-              <p className="flex flex-col text-right dark:text-[rgba(223,227,250,1)]  text-[.7rem] text-[rgba(126,136,195,1)]">
+              <p className="flex flex-col md:text-right dark:text-[rgba(223,227,250,1)]  text-[.7rem] text-[rgba(126,136,195,1)]">
                 <span>{invoiceData?.senderAddress?.street}</span>
                 <span>{invoiceData?.senderAddress?.city}</span>
                 <span>{invoiceData?.senderAddress?.postCode}</span>
@@ -101,7 +92,7 @@ const ViewInvoice = () => {
               </p>
             </div>
           </div>
-          <div className="flex mt-[3.063rem] md:justify-between">
+          <div className="md:flex grid grid-cols-2 gap-x-[2.563rem] mt-[2rem] flex-row md:mt-[3.063rem] md:justify-between">
             <div className="space-y-[2rem]">
               <p className="flex flex-col gap-y-[.75rem] w-fit">
                 <span className="text-[rgba(126,136,195,1)]  dark:text-[rgba(223,227,250,1)]  text-[.75rem]">
@@ -144,7 +135,7 @@ const ViewInvoice = () => {
                 </span>
               </p>
             </div>
-            <div>
+            <div className="mt-[2rem] md:mt-0">
               <p className="flex flex-col gap-y-[.75rem] w-fit">
                 <span className="text-[rgba(126,136,195,1)]  dark:text-[rgba(223,227,250,1)]  text-[.75rem]">
                   Sent To
@@ -155,33 +146,10 @@ const ViewInvoice = () => {
               </p>
             </div>
           </div>
-          <div className=" md:mt-[3rem]">
-            <div className="p-[2rem] w-full rounded-t-lg dark:bg-[rgba(37,41,69,1)]">
+          <div className=" md:mt-[3rem] mt-[2.5rem]">
+            <div className="md:p-[2rem] p-[1.5rem] w-full rounded-t-lg dark:bg-[rgba(37,41,69,1)]">
               <table className="w-full">
-                <thead>
-                  <tr>
-                    <th className="text-left ">
-                      <span className="text-[rgba(126,136,195,1)]  dark:text-[rgba(223,227,250,1)]  font-normal text-[.75rem]">
-                        Item name
-                      </span>
-                    </th>
-                    <th className="text-center ">
-                      <span className="text-[rgba(126,136,195,1)]  dark:text-[rgba(223,227,250,1)]  font-normal text-[.75rem]">
-                        QTY.
-                      </span>
-                    </th>
-                    <th className="text-right ">
-                      <span className="text-[rgba(126,136,195,1)]  dark:text-[rgba(223,227,250,1)]  font-normal text-[.75rem]">
-                        Price
-                      </span>
-                    </th>
-                    <th className="text-right ">
-                      <span className="text-[rgba(126,136,195,1)]  dark:text-[rgba(223,227,250,1)]  font-normal text-[.75rem]">
-                        Total
-                      </span>
-                    </th>
-                  </tr>
-                </thead>
+                <TableHeader />
                 <tbody>
                   {invoiceData?.items?.map(
                     ({ name, quantity, price, total }) => (
@@ -189,20 +157,20 @@ const ViewInvoice = () => {
                         className=""
                         key={invoiceData?.clientName?.name + name}
                       >
-                        <td className=" pt-[2rem] font-bold text-[.75rem] w-[13.25rem]">
+                        <td className=" md:pt-[2rem] font-bold text-[.75rem] w-[13.25rem]">
                           {name}
                         </td>
-                        <td className=" text-center pt-[2rem]">
+                        <td className=" text-center md:pt-[2rem]">
                           <span className="text-[rgba(126,136,195,1)] font-bold dark:text-[rgba(223,227,250,1)] text-[.75rem]">
                             {quantity}
                           </span>
                         </td>
-                        <td className="text-right pt-[2rem] ">
+                        <td className="text-right md:pt-[2rem] ">
                           <span className="text-[rgba(126,136,195,1)] font-bold dark:text-[rgba(223,227,250,1)] text-[.75rem]">
                             £ {price}
                           </span>
                         </td>
-                        <td className="text-right pt-[2rem]">
+                        <td className="text-right md:pt-[2rem]">
                           <span className=" font-bold text-[.75rem]">
                             £ {total}
                           </span>
