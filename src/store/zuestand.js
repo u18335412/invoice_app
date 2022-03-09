@@ -3,6 +3,11 @@ import data from "../../data.json";
 
 const useStore = create((set) => ({
   invoices: data,
+  isDark: false,
+  toggleTheme: () =>
+    set((state) => ({
+      isDark: !state.isDark,
+    })),
   addInvoice: (invoice) =>
     set((state) => ({
       invoices: [{ ...invoice }, ...state.invoices],
