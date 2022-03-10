@@ -64,7 +64,7 @@ const ViewInvoice = () => {
             <EditButton setEditIsOpen={setEditIsOpen} />
             <DeleteButton setDeleteIsOpen={setDeleteIsOpen} />
             <StatusToggle
-              invioceStatus={invoiceData?.status}
+              invoiceStatus={invoiceData?.status}
               invoiceId={invoiceData?.id}
               markAsStatus={markAsStatus}
             ></StatusToggle>
