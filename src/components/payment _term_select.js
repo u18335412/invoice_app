@@ -8,7 +8,7 @@ export default function PaymentSelect({ paymentList, selected, setSelected }) {
     <div className="">
       <Listbox value={selected} onChange={setSelected}>
         <div className="relative mt-1">
-          <Listbox.Button className="relative w-[15rem] py-4 px-[1.25rem] text-left text-[0.7rem] bg-white dark:bg-[rgba(30,33,57,1)] cursor-pointer ring-[rgba(223,227,250,1)] dark:ring-[rgb(37,41,69)] dark:ring-0 dark:text-white rounded-[.25rem] focus:outline-none ring-1 font-bold focus-visible:ring-opacity-75 focus-visible:ring-white h-[3rem] focus-visible:ring-[rgba(124,93,250,1)]">
+          <Listbox.Button className="relative w-full md:w-[15rem] py-4 px-[1.25rem] text-left text-[0.7rem] bg-white dark:bg-[rgba(30,33,57,1)] cursor-pointer ring-[rgba(223,227,250,1)] dark:ring-[rgb(37,41,69)] dark:ring-0 dark:text-white rounded-[.25rem] focus:outline-none ring-1 font-bold focus-visible:ring-opacity-75 focus-visible:ring-white h-[3rem] focus-visible:ring-[rgba(124,93,250,1)]">
             <span className="block truncate">{selected}</span>
             <span className="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none">
               <img src="/assets/icon-arrow-down.svg" alt="arrow down" />
