@@ -29,7 +29,7 @@ export default function DeleteModal({
               leaveFrom="opacity-100"
               leaveTo="opacity-0"
             >
-              <Dialog.Overlay className="fixed inset-0 bg-black/50" />
+              <Dialog.Overlay className="fixed inset-0 bg-black/60" />
             </Transition.Child>
             <span
               className="inline-block h-screen align-middle"
@@ -46,7 +46,7 @@ export default function DeleteModal({
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <div className="inline-block dark:bg-[rgba(30,33,57,1)] w-full max-w-md p-[3rem] my-8 [box-shadow:_0px_10px_10px_-10px_rgba(72,84,159,0.1)] overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-[.5rem]">
+              <div className="inline-block dark:bg-[rgba(30,33,57,1)] w-full max-w-md p-[2rem] md:p-[3rem] my-8 [box-shadow:_0px_10px_10px_-10px_rgba(72,84,159,0.1)] overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-[.5rem]">
                 <Dialog.Title
                   as="h3"
                   className="text-[1.5rem] font-bold leading-6 dark:text-white text-gray-900"
@@ -60,7 +60,7 @@ export default function DeleteModal({
                   </p>
                 </div>
 
-                <div className="flex gap-x-[.5rem] justify-end w-full mt-4">
+                <div className="flex gap-x-[.5rem] justify-end w-full mt-[1.5rem] md:mt-4">
                   <button
                     onClick={closeModal}
                     className="text-[rgba(126,136,195,1)] dark:bg-[rgba(37,41,69,1)] text-[.75rem] font-bold px-[1.2rem] rounded-full"
