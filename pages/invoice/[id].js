@@ -12,6 +12,7 @@ import DeleteButton from "../../src/components/delete_button";
 import EditButton from "../../src/components/edit_button";
 import StatusToggle from "../../src/components/toggle_status_button";
 import TableHeader from "../../src/components/table_row_header";
+import BackButton from "../../src/components/back_button";
 
 const ViewInvoice = () => {
   const router = useRouter();
@@ -31,7 +32,7 @@ const ViewInvoice = () => {
   };
 
   return (
-    <main className="py-[4rem] min-h-screen">
+    <main className="md:py-[4rem] pt-[6.5rem] pb-[10rem] min-h-screen">
       <Contanier>
         <InvoiceEditAdd
           closeModal={() => setEditIsOpen(false)}
@@ -44,23 +45,13 @@ const ViewInvoice = () => {
           invoiceId={id}
           handleDelete={handleDelete}
         />
-
-        <Link href="/" passHref>
-          <button className="flex text-[0.7rem] items-center justify-center font-bold gap-x-[1.75rem]">
-            <img
-              src="/assets/icon-arrow-left.svg"
-              className="w-2 h-2"
-              alt="arrow left"
-            />
-            Go back
-          </button>
-        </Link>
+        <BackButton />
         <div className="mt-[2rem] text-[.7rem] dark:bg-[rgba(30,33,57,1)] px-[2rem] py-[1.25rem] justify-between flex rounded-[.5rem] ">
           <div className="flex justify-between md:justify-start w-full items-center gap-x-[1rem] md:w-fit">
             <p>Status</p>
             <Status status={invoiceData?.status} />
           </div>
-          <div className="md:flex gap-x-[.5rem] w-fit hidden">
+          <div className="flex gap-x-[.5rem] bg-white dark:bg-[rgba(30,33,57,1)] md:relative md:w-fit fixed bottom-0 justify-center left-0 py-[1.313rem] px-[1.5rem] md:px-0 md:py-0 right-0 w-full [box-shadow:_0px_10px_10px_-10px_rgba(72,84,159,0.1)]">
             <EditButton setEditIsOpen={setEditIsOpen} />
             <DeleteButton setDeleteIsOpen={setDeleteIsOpen} />
             <StatusToggle
