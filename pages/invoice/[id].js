@@ -31,7 +31,7 @@ const ViewInvoice = () => {
   };
 
   return (
-    <main className="pt-[4rem] min-h-screen">
+    <main className="py-[4rem] min-h-screen">
       <Contanier>
         <InvoiceEditAdd
           closeModal={() => setEditIsOpen(false)}
@@ -154,25 +154,26 @@ const ViewInvoice = () => {
                   {invoiceData?.items?.map(
                     ({ name, quantity, price, total }) => (
                       <tr
-                        className=""
+                        className="space-y-10 "
                         key={invoiceData?.clientName?.name + name}
                       >
-                        <td className=" md:pt-[2rem] font-bold text-[.75rem] w-[13.25rem]">
+                        <td className=" md:pt-[2rem]  font-bold text-[.75rem] w-[13.25rem]">
                           {name}
+                          <span className="block md:hidden mt-2 text-[rgba(136,142,176,1)]">{`${quantity}x£${price}`}</span>
                         </td>
-                        <td className=" text-center md:pt-[2rem]">
+                        <td className=" text-center md:pt-[2rem] invisible  absolute md:relative md:visible">
                           <span className="text-[rgba(126,136,195,1)] font-bold dark:text-[rgba(223,227,250,1)] text-[.75rem]">
                             {quantity}
                           </span>
                         </td>
-                        <td className="text-right md:pt-[2rem] ">
+                        <td className="text-right md:pt-[2rem] invisible  absolute md:relative md:visible">
                           <span className="text-[rgba(126,136,195,1)] font-bold dark:text-[rgba(223,227,250,1)] text-[.75rem]">
                             £ {price}
                           </span>
                         </td>
                         <td className="text-right md:pt-[2rem]">
-                          <span className=" font-bold text-[.75rem]">
-                            £ {total}
+                          <span className="font-bold text-[.75rem]">
+                            {`£${total}`}
                           </span>
                         </td>
                       </tr>
@@ -181,9 +182,11 @@ const ViewInvoice = () => {
                 </tbody>
               </table>
             </div>
-            <div className="bg-[rgba(55,59,83,1)] dark:bg-[rgba(12,14,22,1)] p-[2rem] w-full h-[5rem] rounded-b-[8px] flex items-center text-white justify-between">
+            <div className="bg-[rgba(55,59,83,1)] dark:bg-[rgba(12,14,22,1)] md:p-[2rem] p-[1.25rem] w-full h-[5rem] rounded-b-[8px] flex items-center text-white justify-between">
               <p className=" text-[0.74rem]">Amount Due</p>
-              <p className="font-bold text-[1.5rem]">£ {invoiceData?.total}</p>
+              <p className="font-bold text-[1.2rem] md:text-[1.5rem]">
+                £ {invoiceData?.total}
+              </p>
             </div>
           </div>
         </div>

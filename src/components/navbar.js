@@ -5,13 +5,13 @@ import TransitionComponent from "./transition_component";
 const Navbar = ({ isDark, setIsDark }) => {
   const router = useRouter();
   return (
-    <nav className="flex md:flex-row justify-between xl:rounded-tr-[20px] xl:rounded-br-[20px] xl:h-full xl:min-h-screen h-[4.5rem] md:h-[5rem] z-50 xl:absolute md:relative xl:flex-col inset-0 xl:w-[6.438rem] w-full overflow-hidden bg-[rgb(37,41,69)]">
+    <nav className="flex flex-row justify-between xl:rounded-tr-[20px] xl:rounded-br-[20px] xl:h-full xl:min-h-screen h-[4.5rem] md:h-[5rem] z-50 xl:absolute relative xl:flex-col inset-0 xl:w-[6.438rem] w-full overflow-hidden bg-[rgb(37,41,69)]">
       <div
         className="cursor-pointer xl:flex bg-lime-300s md:block"
         onClick={() => router.push("/")}
       >
         <div
-          className="xl:w-full md:w-[5rem] flex rounded-br-[20px] overflow-hidden xl:h-[6.438rem] md:h-full flex-col-reverse bg-[rgb(124,93,250)] relative justify-center items-center"
+          className="xl:w-full w-[5rem] flex rounded-br-[20px] overflow-hidden xl:h-[6.438rem] h-full flex-col-reverse bg-[rgb(124,93,250)] relative justify-center items-center"
           alt="logo icon"
         >
           <div className="w-full bg-[rgb(146,119,255)] h-1/2 rounded-tl-[20px] "></div>
