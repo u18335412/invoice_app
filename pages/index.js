@@ -15,7 +15,7 @@ export default function Home() {
 
   return (
     <>
-      <main className="min-h-screen">
+      <main className="min-h-screen xl:pt-[4.5rem] md:pt-[3.5rem] py-[6.5rem]">
         <Contanier>
           <InvoiceEditAdd
             closeModal={() => setAddIsOpen(false)}
@@ -24,7 +24,7 @@ export default function Home() {
             setData={setNewInvoiceData}
           />
 
-          <div className="flex justify-between xl:pt-[4.5rem] md:pt-[3.5rem] pt-[2.125rem]">
+          <div className="flex justify-between ">
             <div>
               <p className=" font-bold md:text-[2rem] text-[1.2rem]">
                 Invoices
