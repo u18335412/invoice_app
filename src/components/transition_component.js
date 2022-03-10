@@ -12,7 +12,7 @@ const TransitionComponent = ({ showing, children, as }) => {
       enterTo="opacity-100"
       leave="transform duration-200 transition ease-in-out"
       leaveFrom="opacity-100 scale-100 "
-      leaveTo="opacity-20 scale-50"
+      leaveTo="opacity-0 scale-90"
       afterLeave={() => {}}
     >
       {children}
