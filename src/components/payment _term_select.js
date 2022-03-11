@@ -15,7 +15,7 @@ export default function PaymentSelect({ paymentList, selected, setSelected }) {
             </span>
           </Listbox.Button>
           <TransitionComponent>
-            <Listbox.Options className="absolute w-full mt-2 overflow-auto text-[.7rem] bg-whte dark:text-[rgba(223,227,250,1)] border-0 dark:bg-[rgba(37,41,69,1)] rounded-md shadow-lg max-h-60 text-[rgba(12,14,22,1)] focus-visible:ring-[rgba(124,93,250,1)] dark:divide-[rgba(30,33,57,1)] divide-y-[1px] divide-[rgba(223,227,250,1)] font-bold ring-opacity-5 focus:outline-none">
+            <Listbox.Options className="absolute w-full mt-2 overflow-auto text-[.7rem] bg-whte bg-white dark:text-[rgba(223,227,250,1)] border-0 dark:bg-[rgba(37,41,69,1)] rounded-md [box-shadow:_0px_10px_20px_0px_rgba(72,84,159,0.25)] max-h-60 text-[rgba(12,14,22,1)] focus-visible:ring-[rgba(124,93,250,1)] dark:divide-[rgba(30,33,57,1)] divide-y-[1px] divide-[rgba(223,227,250,1)] font-bold ring-opacity-5 focus:outline-none">
               {paymentList?.map((payment_type, personIdx) => (
                 <Listbox.Option
                   key={personIdx + payment_type}
