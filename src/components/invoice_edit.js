@@ -466,7 +466,7 @@ const InvoiceEditAdd = ({ isOpen, closeModal, invoiceData }) => {
                         </div>
                       </>
                     ) : (
-                      <div className="flex justify-between gap-x-2 w-full md:bg-inherit bg-white dark:bg-[rgba(30,33,57,1)] absolute [box-shadow:_0px_10px_10px_-10px_rgba(72,84,159,0.1)] md:relative h-fit left-0 px-[1.5rem] md:py-0 md:px-0 py-[1.313rem]">
+                      <div className="flex justify-between gap-x-2 w-full md:dark:bg-inherit bg-white dark:bg-[rgba(30,33,57,1)] absolute md:relative h-fit left-0 px-[1.5rem] md:py-0 md:px-0 py-[1.313rem]">
                         <button
                           onClick={() => {
                             closeModal(true);
