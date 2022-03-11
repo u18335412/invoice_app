@@ -65,6 +65,9 @@ const EditListItem = ({
   register,
   errors,
   value,
+  removeItem,
+  unregister,
+  idx,
 }) => {
   return (
     <div className="flex text-[0.7rem] flex-wrap gap-x-4 md:flex-grow-0 justify-between items-center gap-y-[1.5rem] text-[rgba(136,142,176,1)] ">
@@ -132,6 +135,14 @@ const EditListItem = ({
 
       <span className="pt-4 md:pt-0">
         <img
+          // onClick={() => {
+          //   unregister(`${itemName}Name`);
+          //   unregister(`${itemName}Qty`);
+          //   unregister(`${itemName}Price`);
+          //   unregister(`${itemName}Total`);
+
+          //   removeItem(idx);
+          // }}
           src="/assets/icon-delete.svg"
           className="w-[.75rem] h-[1rem]"
           alt="trash icon"
@@ -155,21 +166,22 @@ const InvoiceEditAdd = ({ isOpen, closeModal, invoiceData }) => {
     register,
     handleSubmit,
     reset,
+    resetField,
+    getValues,
+    unregister,
     formState: { errors },
   } = useForm();
+
   const [invoiceItems, setInvoiceItems] = useState(invoiceData?.items || []);
   const [itemsError, setItemsError] = useState(false);
 
   const handleEditInvoice = (data) => {
     setItemsError(false);
-    invoiceItems.length < 1
-      ? setItemsError(true)
-      : editInvoice(
-          { ...data, id: invoiceData.id },
-          invoiceItems.length,
-          selected
-        );
-
+    if (invoiceItems.length < 1) {
+      setItemsError(true);
+      return;
+    }
+    editInvoice({ ...data, id: invoiceData.id }, invoiceItems.length, selected);
     closeModal();
   };
 
@@ -183,6 +195,13 @@ const InvoiceEditAdd = ({ isOpen, closeModal, invoiceData }) => {
   const addItem = () => {
     const item = { name: "", quantity: "", price: "", total: "" };
     setInvoiceItems([...invoiceItems, item]);
+  };
+
+  const removeItem = (idx) => {
+    setInvoiceItems([
+      ...invoiceItems.filter((item, itemIdx) => idx !== itemIdx),
+    ]);
+    console.table(getValues());
   };
 
   return (
@@ -411,6 +430,7 @@ const InvoiceEditAdd = ({ isOpen, closeModal, invoiceData }) => {
                     </div>
 
                     <div className="mt-[1.5rem] flex flex-col gap-y-12 md:gap-y-[1.13rem] md:mt-[1rem]">
+                      {console.table(invoiceItems)}
                       {invoiceItems?.map(
                         ({ name, quantity, price, total }, idx) => {
                           return (
@@ -418,11 +438,14 @@ const InvoiceEditAdd = ({ isOpen, closeModal, invoiceData }) => {
                               errors={errors}
                               value={name || `item${idx}`}
                               register={register}
-                              key={`item${idx}`}
+                              key={`${Date.now() + idx}`}
                               itemName={`item${idx}`}
                               qty={quantity}
                               price={price}
                               total={total}
+                              idx={idx}
+                              unregister={unregister}
+                              removeItem={removeItem}
                             />
                           );
                         }
@@ -450,7 +473,7 @@ const InvoiceEditAdd = ({ isOpen, closeModal, invoiceData }) => {
 
                     {invoiceData && Object.keys(invoiceData).length > 0 ? (
                       <>
-                        <div className="flex text-[.75rem] gap-x-[.5rem] mt-[2.75rem] justify-end md:bg-inherit bg-white [box-shadow:_0px_10px_10px_-10px_rgba(72,84,159,0.1)] dark:bg-[rgba(30,33,57,1)] absolute md:relative w-full left-0 px-[1.5rem] md:py-0 md:px-0 py-[1.313rem]">
+                        <div className="flex text-[.75rem] gap-x-[.5rem] mt-[2.75rem] justify-end md:bg-inherit bg-white dark:bg-[rgba(30,33,57,1)] absolute md:relative w-full left-0 dark:md:bg-inherit px-[1.5rem] md:py-0 md:px-0 py-[1.313rem]">
                           <button
                             onClick={closeModal}
                             className="font-bold h-[3rem] text-[rgba(126,136,195,1)] py-[.52rem] px-[1.25rem] hover:bg-[rgba(223,227,250,1)] transition-all rounded-full "
