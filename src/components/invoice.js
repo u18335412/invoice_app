@@ -28,7 +28,7 @@ const Invoice = ({
             {id}
           </p>
           <p className="text-[0.75rem] hidden md:inline text-left w-fit dark:text-white text-[rgba(126,136,195,1)]">
-            Due
+            Due{" "}
             {new Date(paymentDue).toLocaleString("default", {
               year: "numeric",
               month: "short",
