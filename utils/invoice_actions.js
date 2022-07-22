@@ -1,83 +1,56 @@
 import useStore from "../src/store/zuestand";
 var randomChar = require("random-char");
 
-const generateId = () => {
-  const id =
-    randomChar("upper") +
-    randomChar("upper") +
-    randomChar("number") +
-    randomChar("number") +
-    randomChar("number") +
-    randomChar("number");
-  return id;
-};
+const generateId = () =>
+  randomChar("upper") +
+  randomChar("upper") +
+  randomChar("number") +
+  randomChar("number") +
+  randomChar("number") +
+  randomChar("number");
 
-const setData = (data, paymentTerms) => {
-  const invoice = {
-    id: data?.id || generateId(),
-    createdAt: formatedDate(),
-    paymentDue: data.date,
-    description: data?.description,
-    paymentTerms,
-    clientName: data?.clientName,
-    clientEmail: data?.clientEmail,
-    status: "pending",
-    senderAddress: {
-      street: data?.senderStreet,
-      city: data?.senderCity,
-      postCode: data?.senderPostCode,
-      country: data?.senderCountry,
-    },
-    clientAddress: {
-      street: data?.clientStreet,
-      city: data?.clientCity,
-      postCode: data?.clientPostCode,
-      country: data?.clientCountry,
-    },
-  };
-  return invoice;
-};
+const setData = (data) => ({
+  id: data?.id || generateId(),
+  createdAt: formatedDate(),
+  paymentDue: data.date,
+  description: data?.description,
+  clientName: data?.clientName,
+  clientEmail: data?.clientEmail,
+  status: data?.status,
+  paymentTerms: data?.paymentTerms,
+  items: data?.items,
+  senderAddress: {
+    street: data?.senderStreet,
+    city: data?.senderCity,
+    postCode: data?.senderPostCode,
+    country: data?.senderCountry,
+  },
+  clientAddress: {
+    street: data?.clientStreet,
+    city: data?.clientCity,
+    postCode: data?.clientPostCode,
+    country: data?.clientCountry,
+  },
+  total: data?.items?.reduce(
+    (prev, current) => parseInt(prev) + parseInt(current.total),
+    0
+  ),
+});
 
-const setItems = (data, itemsCount, invoice) => {
-  let itemCount = itemsCount - 1;
-  let total = 0;
-  const items = [];
-  while (itemCount >= 0) {
-    const item = {
-      name: data[`item${itemCount}Name`],
-      quantity: data[`item${itemCount}Qty`],
-      price: data[`item${itemCount}Price`],
-      total: data[`item${itemCount}Total`],
-    };
-    total += parseInt(data[`item${itemCount}Total`]);
-    items.push(item);
-    itemCount--;
-  }
-  invoice.items = items;
-  invoice.total = total;
-
-  return invoice;
-};
-
-const formatedDate = () => {
-  var current = new Date().toISOString().slice(0, 10);
-  return current;
-};
+const formatedDate = () => new Date().toISOString().slice(0, 10);
 
 export const useInvoice = () => {
   const removeInvoiceFromStore = useStore((state) => state.removeInvoice);
   const addInvoiceToStore = useStore((state) => state.addInvoice);
   const invoices = useStore((state) => state.invoices);
 
-  const addInvoice = (data, itemsCount, paymentTerms) => {
-    let invoice = setData(data, paymentTerms, true);
-    invoice = setItems(data, itemsCount, invoice);
+  const addInvoice = (data) => {
+    let invoice = setData(data);
     addInvoiceToStore(invoice);
   };
 
-  const editInvoice = (data, itemsCount, paymentTerms) => {
-    let invoice = setData(data, paymentTerms, false);
-    invoice = setItems(data, itemsCount, invoice);
+  const editInvoice = (data) => {
+    let invoice = setData(data);
     deleteInvoice(data.id);
     addInvoiceToStore(invoice);
   };
