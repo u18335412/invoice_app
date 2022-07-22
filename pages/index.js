@@ -1,10 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
-import Contanier from "../src/components/container";
-import Invoice from "../src/components/invoice";
-import FilterPopover from "../src/components/filter_popover";
+import Contanier from "../src/components/Container";
+import Invoice from "../src/components/Invoice";
+import FilterPopover from "../src/components/FilterPopover";
 import { useState } from "react";
-import InvoiceEditAdd from "../src/components/invoice_edit";
-import NoInvoiceFound from "../src/components/no_invoice_found";
+import InvoiceEditAdd from "../src/components/InvoiceEditAdd";
+import NoInvoiceFound from "../src/components/NoInvoiceFound";
 import useStore from "../src/store/zuestand";
 
 export default function Home() {
@@ -15,16 +15,18 @@ export default function Home() {
 
   return (
     <>
-      <main className="min-h-screen xl:pt-[4.5rem] md:pt-[3.5rem] py-[6.5rem]">
+      <main className="min-h-screen xl:pt-[4.5rem] md:pt-[3.5rem] py-[6.5rem] md:flex justify-center">
         <Contanier>
-          <InvoiceEditAdd
-            closeModal={() => setAddIsOpen(false)}
-            isOpen={isAddOpen}
-            invoiceData={newInvoiceData}
-            setData={setNewInvoiceData}
-          />
+          {isAddOpen && (
+            <InvoiceEditAdd
+              closeModal={() => setAddIsOpen(false)}
+              isOpen={isAddOpen}
+              invoiceData={newInvoiceData}
+              setData={setNewInvoiceData}
+            />
+          )}
 
-          <div className="flex justify-between ">
+          <div className="flex justify-between md:w-[730px]">
             <div>
               <p className=" font-bold md:text-[2rem] text-[1.2rem]">
                 Invoices
