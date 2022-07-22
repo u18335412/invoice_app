@@ -1,11 +1,13 @@
 /* eslint-disable @next/next/no-img-element */
 import { useRouter } from "next/router";
-import TransitionComponent from "./transition_component";
+import TransitionComponent from "./TransitionComponent";
+import useStore from "../store/theme";
 
-const Navbar = ({ isDark, setIsDark }) => {
+const Navbar = () => {
   const router = useRouter();
+  const { isDark, toggleTheme } = useStore();
   return (
-    <nav className="flex flex-row justify-between xl:rounded-tr-[20px] xl:rounded-br-[20px] xl:h-full xl:min-h-screen h-[4.5rem] md:h-[5rem] z-50 xl:absolute fixed md:relative xl:flex-col inset-0 xl:w-[6.438rem] w-full overflow-hidden bg-[rgb(37,41,69)]">
+    <nav className="flex flex-row justify-between xl:rounded-tr-[20px] xl:rounded-br-[20px] xl:h-screen xl:min-h-screen h-[4.5rem] md:h-[5rem] z-50 xl:absolute fixed md:relative xl:flex-col inset-0 xl:w-[6.438rem] w-full overflow-hidden bg-[rgb(37,41,69)]">
       <div
         className="cursor-pointer xl:flex bg-lime-300s md:block"
         onClick={() => router.push("/")}
@@ -26,7 +28,7 @@ const Navbar = ({ isDark, setIsDark }) => {
       <div className="flex xl:w-full w-fit  flex-row xl:gap-x-0 gap-x-[1.25rem] md:gap-x-[2rem] xl:flex-col justify-center items-center">
         <div className="relative md:w-full xl:w-fit">
           <input
-            onClick={() => setIsDark(!isDark)}
+            onClick={() => toggleTheme()}
             defaultValue={isDark}
             type="checkbox"
             className="w-[1.199rem] cursor-pointer appearance-none h-[1.199rem] peer"
