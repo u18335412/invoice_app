@@ -7,7 +7,7 @@ const Navbar = () => {
   const router = useRouter();
   const { isDark, toggleTheme } = useStore();
   return (
-    <nav className="flex flex-row justify-between xl:rounded-tr-[20px] xl:rounded-br-[20px] xl:h-screen xl:min-h-screen h-[4.5rem] md:h-[5rem] z-50 xl:absolute fixed md:relative xl:flex-col inset-0 xl:w-[6.438rem] w-full overflow-hidden bg-[rgb(37,41,69)]">
+    <nav className="flex flex-row justify-between xl:rounded-tr-[20px] xl:rounded-br-[20px] xl:h-full xl:min-h-screen h-[4.5rem] md:h-[5rem] z-50 xl:absolute fixed md:relative xl:flex-col inset-0 xl:w-[6.438rem] w-full overflow-hidden bg-[rgb(37,41,69)]">
       <div
         className="cursor-pointer xl:flex bg-lime-300s md:block"
         onClick={() => router.push("/")}

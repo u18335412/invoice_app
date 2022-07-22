@@ -57,7 +57,7 @@ export const useInvoice = () => {
 
   const markAsStatus = (id) => {
     const invoice = invoices.filter((inv) => inv.id == id)[0];
-    invoice.status = invoice.status === "pending" ? "paid" : "pending";
+    invoice.status = invoice.status === "paid" ? "pending" : "paid";
     deleteInvoice(id);
     addInvoiceToStore(invoice);
   };
