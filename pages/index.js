@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
-import Contanier from "../src/components/Container";
-import Invoice from "../src/components/Invoice";
+import Contanier from "/src/components/Container";
+import Invoice from "/src/components/Invoice";
 import FilterPopover from "../src/components/FilterPopover";
 import { useState } from "react";
 import InvoiceEditAdd from "../src/components/InvoiceEditAdd";
