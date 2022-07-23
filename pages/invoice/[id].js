@@ -1,4 +1,4 @@
-import Contanier from "../../src/components/Container";
+import Contanier from "../../src/components/Containers";
 import InvoiceEditAdd from "../../src/components/InvoiceEditAdd";
 import { useState } from "react";
 import DeleteModal from "../../src/components/DeleteModal";
