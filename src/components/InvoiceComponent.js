@@ -22,7 +22,7 @@ const Invoice = ({
       <li
         onClick={() => router.push(`invoice/${id}`)}
         tabIndex={0}
-        className="md:w-[730px] rounded-[.5rem] px-[1.5rem] items-center h-[8.375rem] md:h-[4.5rem] transition-all cursor-pointer hover:ring-1 hover:ring-[rgb(124,93,250)] dark:bg-[rgba(30,33,57,1)]
+        className="md:w-[730px] bg-white rounded-[.5rem] px-[1.5rem] items-center h-[8.375rem] md:h-[4.5rem] transition-all cursor-pointer hover:ring-1 hover:ring-[rgb(124,93,250)] dark:bg-[rgba(30,33,57,1)]
       [box-shadow:0px_10px_10px_-10px_rgba(72,_84,_159,_0.100397)]
   "
       >
