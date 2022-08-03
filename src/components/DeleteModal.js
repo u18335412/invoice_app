@@ -40,11 +40,11 @@ export default function DeleteModal({
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"
-              enterFrom="opacity-0 scale-95"
-              enterTo="opacity-100 scale-100"
-              leave="ease-in duration-200"
-              leaveFrom="opacity-100 scale-100"
-              leaveTo="opacity-0 scale-95"
+              enterFrom="opacity-0 md:scale-95 md:translate-y-0 translate-y-full"
+              enterTo="opacity-100 md:scale-100"
+              leave="ease-in md:duration-200"
+              leaveFrom="md:opacity-100 md:scale-100"
+              leaveTo="md:opacity-0 md:scale-95 translate-y-full md:translate-y-0"
             >
               <div className="inline-block dark:bg-[rgba(30,33,57,1)] w-full max-w-md p-[2rem] md:p-[3rem] my-8 [box-shadow:_0px_10px_10px_-10px_rgba(72,84,159,0.1)] overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-[.5rem]">
                 <Dialog.Title
