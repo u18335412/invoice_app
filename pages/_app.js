@@ -1,6 +1,5 @@
 import "../styles/globals.css";
 import Navbar from "../src/components/navbar";
-import Footer from "../src/components/footer";
 import useStore from "../src/store/theme";
 
 function MyApp({ Component, pageProps }) {

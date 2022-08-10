@@ -28,7 +28,7 @@ const Navbar = () => {
       <div className="flex xl:w-full w-fit  flex-row xl:gap-x-0 gap-x-[1.25rem] md:gap-x-[2rem] xl:flex-col justify-center items-center">
         <div className="relative md:w-full xl:w-fit">
           <input
-            onClick={() => toggleTheme()}
+            onChange={() => toggleTheme()}
             defaultValue={isDark}
             type="checkbox"
             className="w-[1.199rem] cursor-pointer appearance-none h-[1.199rem] peer"
@@ -36,7 +36,7 @@ const Navbar = () => {
             id="theme-toggle"
           />
 
-          {isDark && (
+          {isDark ? (
             <TransitionComponent showing={true}>
               <img
                 src="/assets/icon-sun.svg"
@@ -44,9 +44,7 @@ const Navbar = () => {
                 alt="light theme icon"
               />
             </TransitionComponent>
-          )}
-
-          {!isDark && (
+          ) : (
             <TransitionComponent showing={true}>
               <img
                 src="/assets/icon-moon.svg"
