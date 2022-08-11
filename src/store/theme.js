@@ -5,12 +5,12 @@ const useStore = create(
   persist((set, get) => ({
     isDark: true,
     toggleTheme: () =>
-      set({
-        isDark: !get().isDark,
-      }),
+      set((state) => ({
+        isDark: !state.isDark,
+      })),
   })),
   {
-    name: "theme-storage",
+    name: "theme",
   }
 );
 
