@@ -2,8 +2,13 @@
 import { useRouter } from "next/router";
 import TransitionComponent from "./TransitionComponent";
 import useStore from "../store/theme";
+import { useEffect, useState } from "react";
 
 const Navbar = () => {
+  const [images, setImages] = useState([]);
+  useEffect(() => {
+    setImages(["/assets/icon-moon.svg", "/assets/icon-sun.svg"]);
+  }, []);
   const router = useRouter();
   const { isDark, toggleTheme } = useStore();
   return (
@@ -39,17 +44,17 @@ const Navbar = () => {
           {isDark ? (
             <TransitionComponent showing={true}>
               <img
-                src="/assets/icon-sun.svg"
+                src={images[1]}
                 className="w-[1.199rem] absolute pointer-events-none inset-0 h-[1.199rem]"
-                alt="light theme icon"
+                alt={images[1]}
               />
             </TransitionComponent>
           ) : (
             <TransitionComponent showing={true}>
               <img
-                src="/assets/icon-moon.svg"
+                src={images[0]}
                 className="w-[1.199rem] absolute pointer-events-none inset-0 h-[1.199rem]"
-                alt="dark theme icon"
+                alt={images[0]}
               />
             </TransitionComponent>
           )}
